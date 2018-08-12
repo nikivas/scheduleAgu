@@ -14,11 +14,11 @@
             
           </div><br/>
           <div id="groups"></div>
-          <div>
+          <div hidden="true">
             <div >Неделя</div>
             Числитель <input class="weekCheckbox" type="checkbox" name="numerator" value="1"><br/>
             Знаменатель <input class="weekCheckbox" type="checkbox" name="denominator" value="2"><br />
-            <input type="text" name="grupMas" id="grupStudent">
+            <input type="text" name="grupMas" id="grupStudent" hidden="true">
             <input type="text" name="weekMas" hidden>
           </div>
           <br/>

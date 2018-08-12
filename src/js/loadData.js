@@ -198,7 +198,7 @@ function ajaxTeacher(teacher, typeWeek, id) {
 } 
  
 export function load_faculty() { /*загрузка факультетов*/
-  localStorage.clear();
+  //localStorage.clear();
   $(document).ready(function()
   {
     if(!localStorage.getItem('faculties'))
@@ -306,7 +306,7 @@ function load_specialty(id_spec) {   //специальностей, по выб
       {
         $('#spec').val(localStorage.getItem('choosen_speciality_item'));
       }
-      $('#spinnerFaculty').addClaclearss('invisible');
+      $('#spinnerFaculty').addClass('invisible');
      load_grup($('input[name="kurs"]:checked').val());
   }
 }
@@ -468,7 +468,6 @@ export function visibility_block(oneBlock, twoBlock, threeBlock) {
 
 $(document).on('click','#studentButton1',function() 
 {
-  console.log('зашли');
   ajaxStudent();
   return false;
 });
@@ -478,55 +477,61 @@ function ajaxStudent()
   try
   {
     var grupmas = $("#grupStudent").val();
+    $("#message_info").text('Загрузка расписания');
+    $("#spinnerFaculty").removeClass("invisible");
+    $("#spinnerFaculty").addClass("visible");
     $("#schedule").empty();
     if(grupmas!='')
     {
       var connection_state = navigator.connection.type;
       if(connection_state!=Connection.NONE)
       {
-          console.log('коннект');
-          $("#message_info").text('Загрузка расписания');
-          $("#spinnerFaculty").removeClass("invisible");
-          $("#spinnerFaculty").addClass("visible");
           var grup_separator = grupmas.split(':');
           for (var i = 0; i <grup_separator.length ; i++) 
           {
               var result;
+              var key = grup_separator[i];
               jQuery.ajax({
                   url:'http://raspisanie.asu.edu.ru/student/schedule/'+grup_separator[i],
                   type:'POST',
                   success: function(data){
                   result = jQuery.parseJSON(data);
                   $("#schedule").append(result);
-                  localStorage.setItem(grup_separator[i],result);
+                  localStorage.setItem(key.toString(),result);
+                  console.log(key.toString());
                   },
                   error:function(data) {
                   $("#schedule").append(localStorage.getItem(grup_separator[i]));
                   }
               });
+              if(i==grup_separator.length-1)
+              {
+               $("#spinnerFaculty").addClass("invisible");         
+               jQuery.scrollTo('#schedule',1000);
+              }
           }
-          $("#spinnerFaculty").addClass("invisible");
       }
       else
       {
-          console.log('disconnect');
           var grup_separator = grupmas.split(':');
           for(var i=0;i<grup_separator.length;i++)
           {
-              var result = localStorage.getItem(grup_separator[i]);
+              var result = localStorage.getItem(grup_separator[i].toString());
+              console.log(result);
               if(result!=null)
               {
                  $("#schedule").append(result);
               }
           }
+          jQuery.scrollTo('#schedule',1000);
+          $("#spinnerFaculty").addClass("invisible");
       }
     }
     else
     {
-      $("#schedule").empty();
       $("#schedule").append('<p>Расписание курсов отсутствует</p>');
+      jQuery.scrollTo('#schedule',1000);
     }
-    jQuery.scrollTo('#schedule',1000);
   }
   catch(ex){
     $('#spinnerFaculty').addClass('invisible');
