@@ -358,7 +358,6 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
       success: function(data) {
         var json = jQuery.parseJSON(data);
         localStorage.setItem('all_groupies',data);
-        $('#grupStudent').empty();
         $('#spinnerFaculty').addClass('invisible');
       }
       ,
@@ -368,7 +367,6 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
   else{
   
       var grupie = jQuery.parseJSON(localStorage.getItem('all_groupies'));
-      //console.log(grupie);
       var str_grup="";
       var spliter;
       var spec =  $('#spec').val() ? $('#spec').val() :'';
@@ -379,19 +377,18 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
         if(grupie[i].KURS == kurs && grupie[i].SHIFR_SPEC_NEW == spliter[0])
         {
            str_grup += grupie[i].GRUP+":";
-           /*$("#groups").append("<input type='checkbox' class='grupCheckbox' />"
-                               + grupie[i].GRUP);*/
+           $("#groups").append("<input type='checkbox' value='"+grupie[i].GRUP+ 
+            "' name='grupovuha' class='grupCheckbox' />"
+                               + grupie[i].GRUP);
         }
       }
       str_grup = str_grup.substring(0, str_grup.length - 1);
-      $('#grupStudent').empty();
-      $('#grupStudent').val(str_grup);
       $('#spinnerFaculty').addClass('invisible');
   }
 }
 
 $(document).on('click','.grupCheckbox',function() { //событие на выбор чекбоксов по группам и запсиь в grupMas
-	load_grup_or_week_checkbox('grupCheckbox','#grupStudent');
+	
 });
 
  $(document).on('click','.weekCheckbox',function(event) { //событие на выбор чекбоксов по группам и запсиь в weekMas
@@ -476,52 +473,73 @@ function ajaxStudent()
 {
   try
   {
-    var grupmas = $("#grupStudent").val();
     $("#message_info").text('Загрузка расписания');
     $("#spinnerFaculty").removeClass("invisible");
     $("#spinnerFaculty").addClass("visible");
     $("#schedule").empty();
-    if(grupmas!='')
+    var grupovuha = $("input[name='grupovuha']");
+    var checked_grupovuha =  $("input[name='grupovuha']:checked");
+    if(grupovuha.length!=0)
     {
       var connection_state = navigator.connection.type;
       if(connection_state!=Connection.NONE)
       {
-          var grup_separator = grupmas.split(':');
-          for (var i = 0; i <grup_separator.length ; i++) 
+          if(checked_grupovuha.length!=0)
           {
-              var result;
-              var key = grup_separator[i];
+            checked_grupovuha.each(function()
+            {
+              var key = this.value;
+              console.log(key);
               jQuery.ajax({
-                  url:'http://raspisanie.asu.edu.ru/student/schedule/'+grup_separator[i],
+                  url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
                   type:'POST',
+                  crossDomain:true,
                   success: function(data){
-                  result = jQuery.parseJSON(data);
-                  $("#schedule").append(result);
-                  localStorage.setItem(key.toString(),result);
-                  console.log(key.toString());
+                      var result = jQuery.parseJSON(data);
+                      $("#schedule").append(result);
+                      localStorage.setItem(key,result);
                   },
                   error:function(data) {
-                  $("#schedule").append(localStorage.getItem(grup_separator[i]));
+                      $("#schedule").append(localStorage.getItem(key));
                   }
               });
-              if(i==grup_separator.length-1)
-              {
-               $("#spinnerFaculty").addClass("invisible");         
-               jQuery.scrollTo('#schedule',1000);
-              }
+            });
           }
+          else
+          {
+              grupovuha.each(function(key,val){
+                  var key = val.value;
+                  jQuery.ajax({
+                      url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
+                      type:'POST',
+                      success:function(data){
+                        var result = jQuery.parseJSON(data);
+                        $("#schedule").append(result);
+                        localStorage.setItem(key,result);
+                      },
+                  });
+              });
+          }
+          jQuery.scrollTo('#schedule',1000);
+          $("#spinnerFaculty").addClass("invisible");
       }
       else
       {
-          var grup_separator = grupmas.split(':');
-          for(var i=0;i<grup_separator.length;i++)
+          if(checked_grupovuha.length!=0)
           {
-              var result = localStorage.getItem(grup_separator[i].toString());
-              console.log(result);
-              if(result!=null)
-              {
-                 $("#schedule").append(result);
-              }
+              checked_grupovuha.each(function () {
+                var key = this.value;
+                var result = localStorage.getItem(key);
+                if(result!=null){$("#schedule").append(result);}
+              });
+          }
+          else
+          {
+              grupovuha.each(function (key,val) {
+              var key = val.value;
+              var result = localStorage.getItem(key);
+              if(result!=null){$("#schedule").append(result);}
+            });
           }
           jQuery.scrollTo('#schedule',1000);
           $("#spinnerFaculty").addClass("invisible");
@@ -529,12 +547,13 @@ function ajaxStudent()
     }
     else
     {
+      $('#spinnerFaculty').addClass('invisible');
       $("#schedule").append('<p>Расписание курсов отсутствует</p>');
       jQuery.scrollTo('#schedule',1000);
     }
   }
   catch(ex){
     $('#spinnerFaculty').addClass('invisible');
-    $("#schedule").html('Возникла непредвиденная ошибка. Обратитесь к администратору');
+    $("#schedule").html(ex);
   }
 }
