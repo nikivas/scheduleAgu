@@ -8,7 +8,7 @@
       ddmasters@mail.ru</a></div>
     </div>
     <div class="fixed-bottom-right q-caption">
-        © Developed by Serdar Durdyev
+        © Developed by Serdar Durdyev. Asisted by Nikita Vasiliev
     </div>
   </q-page>
 </template>

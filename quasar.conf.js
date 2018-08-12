@@ -65,7 +65,8 @@ module.exports = function (ctx) {
         'QInnerLoading',
         'QSpinnerGears',
         'QInput',
-        'QRadio'
+        'QRadio',
+        'QCheckbox'
       ],
       directives: [
         'TouchSwipe'

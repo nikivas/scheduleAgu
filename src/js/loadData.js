@@ -226,7 +226,7 @@ export function load_faculty() { /*загрузка факультетов*/
           },
           complete:function(){  /*$('#spinnerFaculty').addClass('invisible');*/},
           error:function(){$('#spinnerFaculty').addClass('invisible');}
-        });
+        });  
     }
     else
     {
@@ -315,7 +315,7 @@ export function preloaded_kurses()
   $('#kurs').empty();
   var str = "";
   for (var i = 1; i < 7; i++) {
-    str += "<input class='kursCheckbox' type='radio' name='kurs' value='"+i+"'>"
+    str += "<input class='kursCheckbox form-radio bg-blue-1'  type='radio' name='kurs' value='"+i+"'>"
     +i+"&nbsp;&nbsp;&nbsp;" ;
   }
   $("#kurs").append(str);
@@ -378,7 +378,7 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
         {
            str_grup += grupie[i].GRUP+":";
            $("#groups").append("<input type='checkbox' value='"+grupie[i].GRUP+ 
-            "' name='grupovuha' class='grupCheckbox' />"
+            "' name='grupovuha' class='grupCheckbox form-radio' />"
                                + grupie[i].GRUP);
         }
       }
@@ -486,24 +486,25 @@ function ajaxStudent()
       {
           if(checked_grupovuha.length!=0)
           {
-            checked_grupovuha.each(function()
-            {
-              var key = this.value;
-              console.log(key);
-              jQuery.ajax({
-                  url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
-                  type:'POST',
-                  crossDomain:true,
-                  success: function(data){
-                      var result = jQuery.parseJSON(data);
-                      $("#schedule").append(result);
-                      localStorage.setItem(key,result);
-                  },
-                  error:function(data) {
-                      $("#schedule").append(localStorage.getItem(key));
-                  }
+              checked_grupovuha.each(function()
+              {
+                var key = this.value;
+                console.log(key);
+                jQuery.ajax({
+                    url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
+                    type:'POST',
+                    crossDomain:true,
+                    async:true,
+                    success: function(data){
+                        var result = jQuery.parseJSON(data);
+                        $("#schedule").append(result);
+                        localStorage.setItem(key,result);
+                    },
+                    error:function(data) {
+                        $("#schedule").append(localStorage.getItem(key));
+                    }
+                });
               });
-            });
           }
           else
           {
@@ -512,6 +513,8 @@ function ajaxStudent()
                   jQuery.ajax({
                       url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
                       type:'POST',
+                      crossDomain:true,
+                      async:true,
                       success:function(data){
                         var result = jQuery.parseJSON(data);
                         $("#schedule").append(result);
@@ -520,8 +523,11 @@ function ajaxStudent()
                   });
               });
           }
+          setTimeout(function(){
           jQuery.scrollTo('#schedule',1000);
           $("#spinnerFaculty").addClass("invisible");
+          }, 2000);
+
       }
       else
       {
