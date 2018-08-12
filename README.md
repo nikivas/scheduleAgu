@@ -1,1 +1,3 @@
-raspisanie_agu
+# Quasar App
+
+> WIP
