@@ -9,114 +9,6 @@ var all_schedule;
 $('document').ready(function(){
     
 });
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady()
-{
-  var type = LocalFileSystem.PERSISTENT;
-  var size =20*1024*1024;
-  
-  //window.requestFileSystem(type, size, successCallback, errorCallback);
-  navigator.webkitPersistentStorage.requestQuota (
-  size, function(grantedBytes) {
-  window.requestFileSystem(window.PERSISTENT, size, successCallback, errorCallback);
-  
-  }, function(e) { console.log('Error', e); }
-  );
-}
-function successCallback(fs) {
-  fs.root.getFile('mobile.txt', {create:true,exclusive:false}, function(fileEntry) {
-     console.log('File creation successfull!')
-  }, errorCallback);
-}
-function errorCallback(error) {
-  console.log("Ошибка при создании: " + error.code)
-}
-
-//write
-function writeFile(json) {
-   var size = 20*1024*1024;
-   var type = window.PERSISTENT;
-   var blowjober = new Blob([json], {type: 'application/json'});
-   window.requestFileSystem(type, blowjober.size, successWritten, errorWritten);
-   function successWritten(fs) {
-      fs.root.getFile('mobile.txt', null, function(fileEntry) {
-
-            fileEntry.createWriter(function(fileWriter) {
-            fileWriter.seek(fileEntry.size);
-            fileWriter.onwriteend = function(e) {
-                //console.log(e);
-                localStorage.setItem('all_schedule','yes');
-            };
-          
-            fileWriter.onerror = function(e) {
-             // console.log(e);
-            };
-            var blob = new Blob(['Шумак лох'], {type: 'application/json'});
-            fileWriter.write(blob);
-            //fileWriter.truncate(0);
-         }, errorWritten);
-      }, errorWritten);
-   }
-
-   function errorWritten(error) {
-      console.log("Ошибка при записи: " + error.code)
-   }
-}
-//endwrite
-
-//read
-function readFile() {
-  var type = LocalFileSystem.PERSISTENT;
-  var size = 20*1024*1024;
-  window.requestFileSystem(type, size, successRead, errorRead);  
-  function successRead(fs) {
-  fs.root.getFile('mobile.txt', null, function(fileEntry) {
-  fileEntry.file(function(file) {
-  console.log(file);
-  var reader = new FileReader();
-  reader.onloadend = function(e) {
-    //all_schedule = JSON.parse(JSON.parse(this.result));
-    //findSchedule(all_schedule);
-    console.log(this.result);
-  };
-  reader.readAsText(file);
-  }, errorCallback);
-  }, errorCallback);
-  }
-  
-  function errorRead(error) {
-  console.log("ошибка чтения: " + error.code)
-  }
-}	
-//endread
-
-function findSchedule(schedule)
-{
-  try{
-    var grupmas = $("#grupStudent").val();
-    var array_grup = grupmas.split(":");
-    $("#schedule").empty();
-    //$("#spinnerFaculty").addClass("visible");
-   // setTimeout(function(){
-    for(var i=0;i<array_grup.length;i++)
-    {
-      if(schedule[0][array_grup[i]]!==undefined)
-      {
-        $("#schedule").append(schedule[0][array_grup[i]].shedule);
-        $("#schedule").append("<br/>");
-      }
-    }
-    $("#spinnerFaculty").addClass("invisible");
-    jQuery.scrollTo('#schedule',1000);
-    //},400);
-  }
-  catch(err)
-  {
-      $("#schedule").text(err);
-     $("#spinnerFaculty").addClass("invisible");
-  }
-}
-
 
 export function getContentForMobile()
 {
@@ -430,29 +322,6 @@ export function preloaded_kurses()
   $("input:radio[name='kurs'][value='"+localStorage.getItem('choosen_kurs')+"']").prop('checked', true);
 }
 
-function preloadShedule(){
-  try
-  {
-    $("#message_info").text('Загрузка расписания');
-    $('#spinnerFaculty').removeClass('invisible');
-    $('#spinnerFaculty').addClass('visible');
-    var grupie = jQuery.parseJSON(localStorage.getItem('all_groupies'));
-    $.ajax({
-        url:'http://raspisanie.asu.edu.ru/student/ready_schedule',
-        type:'GET',
-        success:function(data){
-          writeFile(data);
-          },
-        complete:function(){$('#spinnerFaculty').addClass('invisible');}
-      });
-   
-  }
-  catch(ex)
-  {
-    $('#spinnerFaculty').addClass('invisible');
-    console.log(ex);
-  }
-}
 
 $(document).on('change','#facul',function() {  //событие на изменение факультета
   localStorage.setItem('faculty_choosen',$("#facul").val());
@@ -490,16 +359,14 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
         var json = jQuery.parseJSON(data);
         localStorage.setItem('all_groupies',data);
         $('#grupStudent').empty();
-        if(localStorage.getItem('all_schedule')==null){ preloadShedule();}
+        $('#spinnerFaculty').addClass('invisible');
       }
       ,
       error:function(){$("#spinnerFaculty").addclass('invisible');}
     });
-     //$('#spinnerFaculty').addClass('invisible');
   }
   else{
   
-      //if(localStorage.getItem('all_schedule')==null){preloadShedule();}
       var grupie = jQuery.parseJSON(localStorage.getItem('all_groupies'));
       //console.log(grupie);
       var str_grup="";
@@ -599,50 +466,70 @@ export function visibility_block(oneBlock, twoBlock, threeBlock) {
 	$("#"+threeBlock+'_div').addClass('hide_schedule');
 }	
 
-$(document).on('click','.studentButton',function() { 	//загрузка расписания по студентам
-  var id = $(this).attr('id');
-  var grupMas = "";
-  var typeWeek="";
-  if (id=='studentButton1') {
-    grupMas = $('#grupStudent').val();
-    typeWeek = $('[name=weekMas]').val();
-  }
-  else if (id=='studentButton2') {
-    grupMas = $('#grup').val();
-    typeWeek = $('[name=weekMas1]').val();
-    console.log('поиск по группам');
-  }
-  typeWeek = ((typeWeek=='1') || (typeWeek=='2')) ? "/"+ typeWeek : "";
-  ajaxStudent(grupMas, typeWeek,id);
+$(document).on('click','#studentButton1',function() 
+{
+  console.log('зашли');
+  ajaxStudent();
   return false;
 });
 
-function ajaxStudent(grupMas, typeWeek,id)
+function ajaxStudent()
 {
- 
   try
   {
     var grupmas = $("#grupStudent").val();
-    if(grupMas!='')
+    $("#schedule").empty();
+    if(grupmas!='')
     {
-      $("#message_info").text('Загрузка расписания');
-      $("#spinnerFaculty").removeClass("invisible");
-      $("#spinnerFaculty").addClass("visible");
-      readFile();
+      var connection_state = navigator.connection.type;
+      if(connection_state!=Connection.NONE)
+      {
+          console.log('коннект');
+          $("#message_info").text('Загрузка расписания');
+          $("#spinnerFaculty").removeClass("invisible");
+          $("#spinnerFaculty").addClass("visible");
+          var grup_separator = grupmas.split(':');
+          for (var i = 0; i <grup_separator.length ; i++) 
+          {
+              var result;
+              jQuery.ajax({
+                  url:'http://raspisanie.asu.edu.ru/student/schedule/'+grup_separator[i],
+                  type:'POST',
+                  success: function(data){
+                  result = jQuery.parseJSON(data);
+                  $("#schedule").append(result);
+                  localStorage.setItem(grup_separator[i],result);
+                  },
+                  error:function(data) {
+                  $("#schedule").append(localStorage.getItem(grup_separator[i]));
+                  }
+              });
+          }
+          $("#spinnerFaculty").addClass("invisible");
+      }
+      else
+      {
+          console.log('disconnect');
+          var grup_separator = grupmas.split(':');
+          for(var i=0;i<grup_separator.length;i++)
+          {
+              var result = localStorage.getItem(grup_separator[i]);
+              if(result!=null)
+              {
+                 $("#schedule").append(result);
+              }
+          }
+      }
     }
     else
     {
       $("#schedule").empty();
-      $("#schedule").append('<p>Расписание отсутствует в базе</p>');
+      $("#schedule").append('<p>Расписание курсов отсутствует</p>');
     }
+    jQuery.scrollTo('#schedule',1000);
   }
   catch(ex){
     $('#spinnerFaculty').addClass('invisible');
     $("#schedule").html('Возникла непредвиденная ошибка. Обратитесь к администратору');
-    console.log(ex);
   }
-}
-function getIndexofGroup(group)
-{
-
 }

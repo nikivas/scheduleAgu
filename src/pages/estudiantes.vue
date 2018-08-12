@@ -14,16 +14,16 @@
             
           </div><br/>
           <div id="groups"></div>
-          <div hidden="true">
+          <div>
             <div >Неделя</div>
             Числитель <input class="weekCheckbox" type="checkbox" name="numerator" value="1"><br/>
             Знаменатель <input class="weekCheckbox" type="checkbox" name="denominator" value="2"><br />
-            <input type="text" name="grupMas" id="grupStudent" hidden="true">
+            <input type="text" name="grupMas" id="grupStudent">
             <input type="text" name="weekMas" hidden>
           </div>
           <br/>
           <q-btn class="studentButton"  id="studentButton1" color="positive"  label="Показать"/><br/><br/>
-          <div id="schedule" keep-alive>
+          <div id="schedule">
           </div>
         </q-tab-pane>
         <!-- Поиск по факультетам - конец-->

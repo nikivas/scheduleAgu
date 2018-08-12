@@ -5,7 +5,7 @@
     <author email="ddmasters@mail.ru" href="https://dmasters.online">
         DMastersTeam
     </author>
-    <content src="index.html" />
+    <content src="http://192.168.1.68:8080/index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -29,7 +29,8 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />
     <allow-navigation href="http://172.16.7.5:8080/index.html" />
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
+    <allow-navigation href="http://192.168.1.68:8080/index.html" />
     <engine name="browser" spec="^5.0.3" />
     <engine name="android" spec="^4.1.0" />
-    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
 </widget>
