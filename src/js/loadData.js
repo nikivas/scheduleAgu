@@ -342,11 +342,17 @@ function empty_grup() { //очищение выбранной группы
 }
 
 $(document).on('click','.kursCheckbox',function() { //событие на выбор чекбоксов по курсам, (поиск по факультету и специальности), запись группы в grupMas
-	$('#grupStudent').val('');
-  localStorage.setItem('choosen_kurs',$('input[name="kurs"]:checked').val());
-	load_grup($('input[name="kurs"]:checked').val());
+    $('#grupStudent').val('');
+    if($(this).attr('value')!=localStorage.getItem('choosen_kurs'))
+    {
+        localStorage.setItem('choosen_kurs',$('input[name="kurs"]:checked').val());
+        load_grup($('input[name="kurs"]:checked').val());
+    }
 });
-
+$(document).on('click','.grupCheckbox',function(){
+    var checked_groups = localStorage.getItem('checked_groups');
+    
+});
 function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
   $('#spinnerFaculty').removeClass('invisible');
   $('#spinnerFaculty').addClass('visible');
@@ -358,7 +364,6 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
       url: 'http://raspisanie.asu.edu.ru/student/grup',
       type: 'POST',
       success: function(data) {
-        var json = jQuery.parseJSON(data);
         localStorage.setItem('all_groupies',data);
         $('#spinnerFaculty').addClass('invisible');
       }
@@ -401,25 +406,6 @@ $(document).on('click','.grupCheckbox',function() { //событие на выб
 	load_grup_or_week_checkbox('weekCheckbox1','[name = weekMas1]');
  });
  
-function load_grup_or_week_checkbox(classCheckbox, name) { // запись в weekMas или grupMas выбранных недель, либо групп
-  var str_chec='';
-	var str_Nochec='';
-	var str='';
-	var flag=0;
-	$('.'+classCheckbox).each(function(i,val){
-		if ($("."+classCheckbox)[i].checked) {
-			str_chec +=$(val).val()+':';
-			flag=1;
-		}
-		else
-    {
-      str_Nochec +=$(val).val()+':';
-    }
-	});
-  str = (flag==0) ? str_Nochec : str_chec;
-	var kurs_mas = str.substring(0, str.length - 1);
-  $(name).val(kurs_mas);
-}
 
 /*показ расписание общее, и отдельно по расписанию, блочное расписание*/
 $(document).on('click','.block_first',function() {
