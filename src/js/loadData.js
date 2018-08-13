@@ -485,14 +485,13 @@ function ajaxStudent()
     if(grupovuha.length!=0)
     {
       var connection_state = navigator.connection.type;
-      if(connection_state==Connection.NONE)
+      if(connection_state!=Connection.NONE)
       {
           if(checked_grupovuha.length!=0)
           {
-              checked_grupovuha.each(function()
+              checked_grupovuha.each(function(index,element)
               {
                 var key = this.value;
-                console.log(key);
                 jQuery.ajax({
                     url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
                     type:'POST',
@@ -503,7 +502,15 @@ function ajaxStudent()
                         $("#schedule").append(result);
                         localStorage.setItem(key,result);
                     },
-                    complete:function(){ jQuery.scrollTo("#schedule",1000);},
+                    complete:function(){ 
+                      if(index==checked_grupovuha.length-1)
+                      {
+                        jQuery.scrollTo("#schedule",1000);
+                        $("#studentButton1").prop('disabled',false);
+                        $("#spinnerFaculty").addClass("invisible");
+                      }
+                 
+                    },
                     error:function(data) {
                         $("#schedule").append(localStorage.getItem(key));
                     }
@@ -512,7 +519,7 @@ function ajaxStudent()
           }
           else
           {
-              grupovuha.each(function(key,val){
+              grupovuha.each(function(index,val){
                   var key = val.value;
                   jQuery.ajax({
                       url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
@@ -523,8 +530,15 @@ function ajaxStudent()
                         var result = jQuery.parseJSON(data);
                         $("#schedule").append(result);
                         localStorage.setItem(key,result);
-
                       },
+                      complete:function(){
+                        if(index==grupovuha.length-1)
+                        {
+                          $("#studentButton1").prop('disabled',false);
+                          $("#spinnerFaculty").addClass("invisible");
+                          jQuery.scrollTo("#schedule",1000);
+                        }
+                      }
                   });
               });
           }
@@ -537,6 +551,8 @@ function ajaxStudent()
                 var key = this.value;
                 var result = localStorage.getItem(key);
                 if(result!=null){$("#schedule").append(result);}
+                else{$("#schedule").append("<p>Соединение с интернетом отсутсвует."+ 
+                  "Локально расписание не сохраненно</p>");}
               });
           }
           else
@@ -545,18 +561,23 @@ function ajaxStudent()
               var key = val.value;
               var result = localStorage.getItem(key);
               if(result!=null){$("#schedule").append(result);}
+               else{$("#schedule").append("<p>Соединение с интернетом отсутсвует."+ 
+                  "Локально расписание не сохраненно</p>");}
             });
           }
+          $("#studentButton1").prop('disabled',false);
+          $("#spinnerFaculty").addClass("invisible");
+          jQuery.scrollTo("#schedule",1000);
       }
     }
     else
     {
-       $("#schedule").append("<p>Расписание отсутсвует</p>");
+      $("#schedule").append("<p>Расписание отсутсвует</p>");
+      $("#studentButton1").prop('disabled',false);
+      $("#spinnerFaculty").addClass("invisible");
+      jQuery.scrollTo("#schedule",1000);
 
     }
-    $("#studentButton1").prop('disabled',false);
-    jQuery.scrollTo("#schedule",1000);
-    $("#spinnerFaculty").addClass("invisible");
   }
   catch(ex){
     $('#spinnerFaculty').addClass('invisible');
