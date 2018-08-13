@@ -314,9 +314,11 @@ export function preloaded_kurses()
 {
   $('#kurs').empty();
   var str = "";
-  for (var i = 1; i < 7; i++) {
-    str += "<input class='kursCheckbox form-radio bg-blue-1'  type='radio' name='kurs' value='"+i+"'>"
+  for (var i = 1; i < 7; i++) 
+  {
+    str += "<input class='kursCheckbox form-radio'  type='radio' name='kurs' value='"+i+"'>"
     +i+"&nbsp;&nbsp;&nbsp;" ;
+    if(i%3==0 && $(document).width()<=400){str+="<br/>";}
   }
   $("#kurs").append(str);
   $("input:radio[name='kurs'][value='"+localStorage.getItem('choosen_kurs')+"']").prop('checked', true);
@@ -367,22 +369,22 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
   else{
   
       var grupie = jQuery.parseJSON(localStorage.getItem('all_groupies'));
-      var str_grup="";
       var spliter;
       var spec =  $('#spec').val() ? $('#spec').val() :'';
       spliter = spec.split('?');
       $("#groups").empty();
+      var count_added=0;
       for(var i=0;i<grupie.length;i++)
       {
         if(grupie[i].KURS == kurs && grupie[i].SHIFR_SPEC_NEW == spliter[0])
         {
-           str_grup += grupie[i].GRUP+":";
            $("#groups").append("<input type='checkbox' value='"+grupie[i].GRUP+ 
             "' name='grupovuha' class='grupCheckbox form-radio' />"
                                + grupie[i].GRUP);
+           count_added++;
+           if(count_added%3==0){$("#groups").append("<br>");}
         }
       }
-      str_grup = str_grup.substring(0, str_grup.length - 1);
       $('#spinnerFaculty').addClass('invisible');
   }
 }
@@ -473,6 +475,7 @@ function ajaxStudent()
 {
   try
   {
+    $("#studentButton1").prop("disabled",true);
     $("#message_info").text('Загрузка расписания');
     $("#spinnerFaculty").removeClass("invisible");
     $("#spinnerFaculty").addClass("visible");
@@ -482,7 +485,7 @@ function ajaxStudent()
     if(grupovuha.length!=0)
     {
       var connection_state = navigator.connection.type;
-      if(connection_state!=Connection.NONE)
+      if(connection_state==Connection.NONE)
       {
           if(checked_grupovuha.length!=0)
           {
@@ -500,6 +503,7 @@ function ajaxStudent()
                         $("#schedule").append(result);
                         localStorage.setItem(key,result);
                     },
+                    complete:function(){ jQuery.scrollTo("#schedule",1000);},
                     error:function(data) {
                         $("#schedule").append(localStorage.getItem(key));
                     }
@@ -519,15 +523,11 @@ function ajaxStudent()
                         var result = jQuery.parseJSON(data);
                         $("#schedule").append(result);
                         localStorage.setItem(key,result);
+
                       },
                   });
               });
           }
-          setTimeout(function(){
-          jQuery.scrollTo('#schedule',1000);
-          $("#spinnerFaculty").addClass("invisible");
-          }, 2000);
-
       }
       else
       {
@@ -547,19 +547,20 @@ function ajaxStudent()
               if(result!=null){$("#schedule").append(result);}
             });
           }
-          jQuery.scrollTo('#schedule',1000);
-          $("#spinnerFaculty").addClass("invisible");
       }
     }
     else
     {
-      $('#spinnerFaculty').addClass('invisible');
-      $("#schedule").append('<p>Расписание курсов отсутствует</p>');
-      jQuery.scrollTo('#schedule',1000);
+       $("#schedule").append("<p>Расписание отсутсвует</p>");
+
     }
+    $("#studentButton1").prop('disabled',false);
+    jQuery.scrollTo("#schedule",1000);
+    $("#spinnerFaculty").addClass("invisible");
   }
   catch(ex){
     $('#spinnerFaculty').addClass('invisible');
     $("#schedule").html(ex);
+    $("#studentButton1").prop('disabled','false');
   }
 }

@@ -11,9 +11,8 @@
           <select class="select-style" id = "spec" name="specaility"></select><br/><br/>
           <span>Курс : </span>
           <div id="kurs">
-
-          </div><br/><br/>
-          <p>Группы
+          </div><br/>
+          <p>Группы</p>
             <div id="groups"></div>
           </p>
           <br/>
@@ -39,7 +38,7 @@
       <q-inner-loading id="spinnerFaculty":visible="true">
         <div class="fixed fixed-center text-center">
           <q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
-          <p id="message_info" class="text-positive" style="font-weight: bold;">Подождите,идет загрузка данных</p>
+          <p id="message_info" class="text-black" style="font-weight: bold;">Подождите,идет загрузка данных</p>
       </div>
       </q-inner-loading>
     </q-page>
