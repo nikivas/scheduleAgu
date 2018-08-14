@@ -25,12 +25,9 @@
         <!-- Блок поиск по группам -->
         <q-tab-pane class="text-center" name="xtab-2" keep-alive>
             <span>Группа :</span><br/>
-           <input class="txtInput" id="grup" placeholder="Например рт31" /><br/>
-            <p>Неделя :</p>
-            Числитель<input class="weekCheckbox1" type="checkbox" name="numerator" value="1">
-            Знаменатель<input class="weekCheckbox1" type="checkbox" name="denominator" value="2"><br/><br/>
-           <q-btn color="amber" class="text-black studentButton" label="Узнать" id="studentButton2"/><br/><br/>
-           <input type="text" name="weekMas1" hidden>
+           <input class="txtInput" id="grup" placeholder="Например рт31" /><br/><br/>
+           <q-btn color="amber" class="text-black studentButton" label="Узнать" 
+           id="studentButton2"/><br/><br/>
            <div id="schedule2"></div>
         </q-tab-pane>
         <!-- Конец-->

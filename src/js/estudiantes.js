@@ -3,149 +3,8 @@ import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
 import '../js/jquery.scroll.js';
 
-////////////////////////////////////////////////АУДИТОРИИ//////////////////////////////////////////////////////////////////////////////////////////
-
-export function load_korpus() { /*загрузка корпусов*/
-  $('#spinnerKorpus').addClass('visible');
-	jQuery.ajax({
-		url: 'http://raspisanie.asu.edu.ru/audience/korpus',
-		type: 'POST',
-		success: function(data) {
-			var json = jQuery.parseJSON(data);
-			for (var i = 0; i < json.length; i++) {
-				$("#kor")
-					.append($("<option></option>")
-					.attr("value", json[i].id)
-					.attr("id", json[i].abr)
-					.text(json[i].name));
-			}
-			load_auditoriya($('#kor').val());
-		},
-    complete:function(){$('#spinnerKorpus').addClass('invisible');},
-    error:function(){$('#spinnerKorpus').addClass('invisible');$('#shedule').html('Возникла ошибка. Повторите ошибку позже!');}
-	});
-}
-///////////////////////////////////
-function load_auditoriya(id_kor) {   /*загрузка аудиторий, по выбранным корпусам*/
-  $('#spinnerKorpus').removeClass('invisible');
-  $('#spinnerKorpus').addClass('visible');
-	jQuery.ajax({
-		url: 'http://raspisanie.asu.edu.ru/audience/audience',
-		type: 'POST',
-		data: {id_kor: id_kor},
-		success: function(data) {
-			var json = jQuery.parseJSON(data);
-			$("#aud").empty();
-			for (var i = 0; i < json.length; i++) {
-				$("#aud")
-					.append($("<option></option>")
-					.attr("value", json[i].id)
-					.text(json[i].name));
-			}
-		},
-     complete:function(){$('#spinnerKorpus').addClass('invisible');}
-	});
-}
-///////////////////////////////////
-$(document).on('change','#kor',function() { /*при изменения корпуса*/	
-	load_auditoriya($(this).val());
-});
-///////////////////////////////////
-
- $(document).on('click','.weekCheckboxAud',function() { //событие на выбор чекбоксов по группам и запсиь в weekMasAud
-	load_grup_or_week_checkbox('weekCheckboxAud','[name = weekMasAud]');
- });  
-  
-$(document).on('click','#audButton',function() { 	//загрузка расписания по аудиториям
-	var idA = $('#aud').val(); 
-	var audience1 = $('#kor option:selected').attr('id').replace('/',':').replace(/\s+/g,'-');
-	var audience2 = ($('#aud option:selected').text()).replace('/',':').replace(/\s+/g,'-');
-	var audience = audience1 + "_" + audience2;
-	var typeWeek = $('[name=weekMasAud]').val();
-  typeWeek = ((typeWeek=='1') || (typeWeek=='2')) ? "/"+ typeWeek : "";
-	ajaxAudience(idA, typeWeek);
-	/*var url = '/audience/'+audience+typeWeek;
-	if(url != window.location){
-		window.history.pushState(null, null, url);
-	}*/
-	return false;
-});
-
-function ajaxAudience(id, typeWeek) {
-  $('#spinnerKorpus').removeClass('invisible');
-  $('#spinnerKorpus').addClass('visible');
-	jQuery.ajax({
-		url: 'http://raspisanie.asu.edu.ru/audience/schedule/'+id+typeWeek,
-		type: 'POST',
-		data: {id: id},
-		success: function(data) {
-			var json = jQuery.parseJSON(data);
-			$('#shedule').empty();
-			$('#shedule').append(json);
-		},
-    complete:function(){ $('#spinnerKorpus').addClass('invisible');jQuery.scrollTo('#shedule',1000);},
-    error:function(){ $('#spinnerKorpus').addClass('invisible');$('#shedule').html('Возникла ошибка. Повторите ошибку позже!');}
-	});
-}
-////////////////////////////////////////////////ПРЕПОДАВАТЕЛИ//////////////////////////////////////////////////////////////////////////////////////
-export function load_teacher() { //загрузка списка преподавателей
-  $('#spinnerTeacher').addClass('invisible');
-	$(function() {
-		function log( message ) {
-			$( "#log" ).empty();
-			//$( "<div/>" ).text( message ).prependTo( "#log" );		
-			$('[name = teacher]').val(message);
-			$( "#log" ).scrollTop( 0 );
-		}
-		$( "#birds" ).autocomplete({
-			source: "http://raspisanie.asu.edu.ru/function/teacher.php",
-			minLength: 2,
-			select: function( event, ui ) {
-				log( ui.item ? ui.item.id : this.value );
-			}			
-		});
-	});
-}
-
-$(document).on('click','.weekCheckboxTea',function() {  //событие на выбор чекбоксов по группам и запсиь в weekMasTea
-	load_grup_or_week_checkbox('weekCheckboxTea','[name = weekMasTea]');
- });
-
-$(document).on('click','#save',function() { 	//загрузка расписания по преподователям
-	var teacher = $('#birds').val();
-	var typeWeek = $('[name=weekMasTea]').val();
-  typeWeek = ((typeWeek=='1') || (typeWeek=='2')) ? "/"+ typeWeek : "";
-	teacher = teacher.replace(/\s+/g,'_');
-	var idT = $('#log').val(); 
-	ajaxTeacher(teacher, typeWeek, idT);
-	var url = '/teacher/'+teacher+typeWeek;
-	/*if(url != window.location){
-		window.history.pushState(null, null, url);
-	}*/
-	return false;
-});
-
-function ajaxTeacher(teacher, typeWeek, id) {
-  $("#spinnerTeacher").removeClass('invisible');
-  $("#spinnerTeacher").addClass('visible');
-	jQuery.ajax({
-		url: 'http://raspisanie.asu.edu.ru/teacher/schedule/'+teacher+typeWeek,
-		type: 'POST',
-		data: {id: id},
-    cache:true,
-		success: function(data) {
-			var json = jQuery.parseJSON(data);
-			$('#schedule').empty();
-			$('#schedule').append(json);
-		},
-    error:function(){$("#schedule").html('Прозошла ошибка. Проверьте,правильность ввода!')}
-    ,
-    complete:function(){ $("#spinnerTeacher").addClass('invisible');jQuery.scrollTo('#schedule',1000)}
-	});
-} 
  
 export function load_faculty() { /*загрузка факультетов*/
-  //localStorage.clear();
   $(document).ready(function()
   {
     if(!localStorage.getItem('faculties'))
@@ -280,13 +139,8 @@ $(document).on('change','#facul',function() {  //событие на измен�
 $(document).on('change','#spec',function() {  //событие на изменение специальности
   localStorage.setItem('choosen_speciality_item',$(this).val());
   load_grup($('input[name="kurs"]:checked').val());
-	//empty_grup();
 });
 
-function empty_grup() { //очищение выбранной группы
-	$("#trGrup").remove();
-	$('#grupStudent').val('');
-}
 
 $(document).on('click','.kursCheckbox',function() { 
     if($(this).attr('value')!=localStorage.getItem('choosen_kurs'))
@@ -303,14 +157,12 @@ $(document).on('click','.grupCheckbox',function(){
      {
         choosen_groups.push($(this).attr('value'));
         localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-        console.log(JSON.parse(localStorage.getItem('choosen_groups')));
      }
      else
      {
         var index = choosen_groups.indexOf($(this).attr('value'));
         choosen_groups.splice(index,1);
         localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-        console.log(JSON.parse(localStorage.getItem('choosen_groups')));
      }
     
 });
@@ -401,7 +253,6 @@ function visibility_date(oneDate, twoDate) {
 }	
 	
 export function visibility_block(oneBlock, twoBlock, threeBlock) {
-  console.log(oneBlock+" "+twoBlock+" "+threeBlock);
 	$("#"+oneBlock).css('color','black');
 	$("#"+twoBlock).css('color','#919397');
 	$("#"+threeBlock).css('color','#919397');
@@ -511,6 +362,7 @@ function ajaxStudent()
               if(result!=null){$("#schedule").append(result);}
                else{$("#schedule").append("<p>Соединение с интернетом отсутсвует."+ 
                   "Локально расписание не сохраненно</p>");}
+
             });
           }
           $("#studentButton1").prop('disabled',false);
@@ -532,4 +384,41 @@ function ajaxStudent()
     $("#schedule").html(ex);
     $("#studentButton1").prop('disabled','false');
   }
+}
+$(document).on('click','#studentButton2',function(){
+    var groupName = $("#grup").val();
+    groupName=groupName.replace('-','');
+    groupName=groupName.trim();
+    groupName=groupName.toUpperCase();
+    if(groupName!='')
+    {
+      console.log(groupName);
+      findScheduleByGroupName(groupName);
+    }
+    return false;
+});
+function findScheduleByGroupName (groupName)
+{
+    var group = groupName;
+    try
+    {
+        if(navigator.connection.type!=Connection.NONE)
+        {
+            jQuery.ajax({
+              url:'http://raspisanie.asu.edu.ru/student/schedule/'+group,
+              type:'POST',
+              success:function(data){
+                var result = jQuery.parseJSON(data);
+                $("#schedule2").append(result);
+              },
+              complete:function(){
+
+              }
+            });
+        }
+    }
+    catch(ex)
+    {
+        $("#schedule2").append(ex);
+    }
 }
