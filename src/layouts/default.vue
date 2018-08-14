@@ -36,7 +36,7 @@
           <q-item-side class="fa fa-users" />
           <q-item-main label="Студенты" />
         </q-item>
-        <!--q-item to="/teachers" >
+        <q-item to="/teachers" >
           <q-item-side class="fas fa-chalkboard-teacher" />
           <q-item-main label="Преподаватели" />
         </q-item-->

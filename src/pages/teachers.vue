@@ -5,16 +5,16 @@
       <p>ФИО преподавателя</p>
       <input id="birds" class="ui-autocomplete-input txtInput" value="" autocomplete="off" placeholder="Введите ФИО преподавателя"
       role="textbox" aria-autocomplete="list" aria-haspopup="true"/><br/>
-      <input type="text" name="teacher" id="log" hidden="">
+      <input type="text" name="teacher" id="log">
       <div>
       <div>Неделя :</div><br>
       Числитель<input class="weekCheckboxTea" type="checkbox" name="numerator" value="1">
       Знаменатель<input class="weekCheckboxTea" type="checkbox" name="denominator" value="2">
       <input type="text" name="weekMasTea" hidden> <br/><br/>
       </div>
-      <q-btn class="button" id="save" color="secondary" label="Показать"/>
+      <q-btn class="button" id="search_teacher" color="secondary" label="Показать"/>
       <div id="schedule"></div>
-       <q-inner-loading id="spinnerTeacher" :visible="true">
+       <q-inner-loading id="spinnerTeacher" :visible="false">
           <div class="fixed fixed-center text-center">
             <q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
             <p style="color:red;font-weight: bold;">Подождите,идет загрузка данных</p>
@@ -25,16 +25,14 @@
 </template>
 
 <script>
-  require ('../css/table.css')
-  import * as jq from '../../node_modules/jquery/dist/jquery.min.js'
-  import * as ui from '../js/jquery.ui.js'
-
-  require('../css/jquery.ui.css')
+  require ('../css/table.css');
+  require('../css/jquery.ui.css');
+  import * as teacher from '../js/teachers.js';
   export default
   {
       mounted()
       {
-
+          teacher.load_teacher();
       }
   }
 </script>
