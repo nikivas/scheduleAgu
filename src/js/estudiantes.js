@@ -3,7 +3,9 @@ import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
 import '../js/jquery.scroll.js';
 
- 
+ $(document).ready(function(){
+   $("#grup").val(localStorage.getItem('grup_name'));
+ });
 export function load_faculty() { /*загрузка факультетов*/
   $(document).ready(function()
   {
@@ -31,7 +33,11 @@ export function load_faculty() { /*загрузка факультетов*/
             load_specialty($('#facul').val());
           },
           complete:function(){  /*$('#spinnerFaculty').addClass('invisible');*/},
-          error:function(){$('#spinnerFaculty').addClass('invisible');}
+          error:function()
+          {
+
+            $('#spinnerFaculty').addClass('invisible');
+          }
         });  
     }
     else
@@ -310,8 +316,13 @@ function ajaxStudent()
                       }
                  
                     },
-                    error:function(data) {
-                        $("#schedule").append(localStorage.getItem(key));
+                    error:function(data) 
+                    {
+                      var result = localStorage.getItem(key);
+                      if(result!=null)
+                      {
+                        $("#schedule").append(result);
+                      }
                     }
                 });
               });
@@ -337,6 +348,11 @@ function ajaxStudent()
                           $("#spinnerFaculty").addClass("invisible");
                           jQuery.scrollTo("#schedule",1000);
                         }
+                      },
+                      error:function()
+                      {
+                         var result = localStorage.getItem(key);
+                         if(result!=null){$("#schedule").append(result);}
                       }
                   });
               });
@@ -360,8 +376,7 @@ function ajaxStudent()
               var key = val.value;
               var result = localStorage.getItem(key);
               if(result!=null){$("#schedule").append(result);}
-               else{$("#schedule").append("<p>Соединение с интернетом отсутсвует."+ 
-                  "Локально расписание не сохраненно</p>");}
+               else{$("#schedule").append("<p>Локально расписание не сохраненно</p>");}
 
             });
           }
@@ -386,35 +401,71 @@ function ajaxStudent()
   }
 }
 $(document).on('click','#studentButton2',function(){
+    $("#schedule2").empty();
     var groupName = $("#grup").val();
     groupName=groupName.replace('-','');
     groupName=groupName.trim();
     groupName=groupName.toUpperCase();
     if(groupName!='')
     {
-      console.log(groupName);
       findScheduleByGroupName(groupName);
     }
-    return false;
+    return true;
 });
 function findScheduleByGroupName (groupName)
 {
-    var group = groupName;
     try
     {
+        var group = groupName;
+        localStorage.setItem('grup_name',groupName);
+        $("#studentButton2").prop('disabled',true);
+        $("#spinnerFaculty").removeClass("invisible");
+        $("#spinnerFaculty").addClass("visible");
+        $("#message_info").text('Поиск расписания');
         if(navigator.connection.type!=Connection.NONE)
         {
             jQuery.ajax({
               url:'http://raspisanie.asu.edu.ru/student/schedule/'+group,
               type:'POST',
-              success:function(data){
+              success:function(data)
+              {
                 var result = jQuery.parseJSON(data);
+                if(!result.includes('Группа введена неверно'))
+                {
+                  localStorage.setItem(group,result);
+                }
                 $("#schedule2").append(result);
               },
               complete:function(){
-
+                  $("#spinnerFaculty").addClass("invisible");
+                  jQuery.scrollTo("#schedule2",1000);
+                  $("#studentButton2").prop('disabled',false);
+              },
+              error:function(){
+                  var result = localStorage.getItem(group);
+                  if(result!=null){$("#schedule2").append(result);}
+                  else
+                  {
+                    $("#schedule2").append('Расписание не найдено. Отсутствует запись в кэше.');
+                  }
+                  $("#studentButton2").prop('disabled',false);
               }
             });
+        }
+        else
+        {
+            var selected_schedule = localStorage.getItem(group);
+            if(selected_schedule!=null)
+            {
+                $("#schedule2").append(selected_schedule);
+            }
+            else
+            {
+                $("#schedule2").append('Отсутствует Соединение с сервером. Отсутствует запись в кэше.');
+            }
+            $("#spinnerFaculty").addClass("invisible");
+            jQuery.scrollTo("#schedule2",1000);
+            $("#studentButton2").prop('disabled',false);
         }
     }
     catch(ex)
