@@ -356,14 +356,14 @@ $(document).on('click','.grupCheckbox',function(){
      {
         choosen_groups.push($(this).attr('value'));
         localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-        console.log(jQuery.parseJSON(localStorage.getItem('choosen_groups')));
+        console.log(JSON.parse(localStorage.getItem('choosen_groups')));
      }
      else
      {
         var index = choosen_groups.indexOf($(this).attr('value'));
         choosen_groups.splice(index,1);
         localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-        console.log(jQuery.parseJSON(localStorage.getItem('choosen_groups')));
+        console.log(JSON.parse(localStorage.getItem('choosen_groups')));
      }
     
 });
@@ -393,15 +393,28 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
       spliter = spec.split('?');
       $("#groups").empty();
       var count_added=0;
+      var choosen_groups = localStorage.getItem('choosen_groups')!=null?
+      jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
       for(var i=0;i<grupie.length;i++)
       {
         if(grupie[i].KURS == kurs && grupie[i].SHIFR_SPEC_NEW == spliter[0])
         {
-           $("#groups").append("<input type='checkbox' value='"+grupie[i].GRUP+ 
+          var appended_result ;
+          if(choosen_groups.includes(grupie[i].GRUP)==true)
+          {
+            appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
+            "' name='grupovuha' checked class='grupCheckbox form-radio' />"
+                               + grupie[i].GRUP;
+          }
+          else
+          {
+              appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
             "' name='grupovuha' class='grupCheckbox form-radio' />"
-                               + grupie[i].GRUP);
-           count_added++;
-           if(count_added%3==0){$("#groups").append("<br>");}
+                               + grupie[i].GRUP;
+          }
+          $("#groups").append(appended_result);
+          count_added++;
+          if(count_added%3==0){$("#groups").append("<br>");}
         }
       }
       $('#spinnerFaculty').addClass('invisible');
