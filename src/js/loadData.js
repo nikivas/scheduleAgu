@@ -341,16 +341,30 @@ function empty_grup() { //очищение выбранной группы
 	$('#grupStudent').val('');
 }
 
-$(document).on('click','.kursCheckbox',function() { //событие на выбор чекбоксов по курсам, (поиск по факультету и специальности), запись группы в grupMas
-    $('#grupStudent').val('');
+$(document).on('click','.kursCheckbox',function() { 
     if($(this).attr('value')!=localStorage.getItem('choosen_kurs'))
     {
         localStorage.setItem('choosen_kurs',$('input[name="kurs"]:checked').val());
+        localStorage.removeItem('choosen_groups');
         load_grup($('input[name="kurs"]:checked').val());
     }
 });
 $(document).on('click','.grupCheckbox',function(){
-    var checked_groups = localStorage.getItem('checked_groups');
+    var choosen_groups = localStorage.getItem('choosen_groups')!=null ?
+     jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
+     if($(this).prop('checked'))
+     {
+        choosen_groups.push($(this).attr('value'));
+        localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
+        console.log(jQuery.parseJSON(localStorage.getItem('choosen_groups')));
+     }
+     else
+     {
+        var index = choosen_groups.indexOf($(this).attr('value'));
+        choosen_groups.splice(index,1);
+        localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
+        console.log(jQuery.parseJSON(localStorage.getItem('choosen_groups')));
+     }
     
 });
 function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
