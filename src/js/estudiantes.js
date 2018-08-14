@@ -2,59 +2,6 @@
 import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
 import '../js/jquery.scroll.js';
-import { LocalStorage} from 'quasar';
-import fs from 'fs';
-import path from 'path';
-var all_schedule;
-$('document').ready(function(){
-    
-});
-
-export function getContentForMobile()
-{
-    $.get('http://raspisanie.asu.edu.ru/note').done(function(data){
-    console.log($(data).find("#divLittle").html());
-      $('#divLittle').append($(data).find("#divLittle"));
-    });
-}
-
-$(document).on('click','.studs',function() { 	//при переходе что отображать!
-	transition('stud','note','aud','teach');
-});
-$(document).on('click','.teachs',function() { 
-	transition('teach','stud','aud','note');
-});
-$(document).on('click','.auds',function() { 
-	transition('aud','teach','stud','note');
-});
-$(document).on('click','.notes',function() { 
-	transition('note','teach','aud','stud');
-});
-
-function setFocus() { //установка фокуса на группе
-	document.getElementById('grup').focus();
-}
-
-function setFocusTea() {  //установка фокуса на преподавателе
-	document.getElementById('birds').focus();
-}
-
-export function load_notes() {
-	jQuery.ajax({
-		url: 'http://raspisanie.asu.edu.ru/ajax_data/select_notes.php',
-		type: 'POST',
-		success: function(data) {
-			data = jQuery.parseJSON(data);
-			$(data).each(function(key, value) {
-				var html =	"<p class='note_title'>"+value.title+
-							"</p><span class='note_text'><div style='padding: 5px 0 5px 25px;'>"+value.text+
-							"</div><div><span class='note_comments'>"+value.location+"</span></div></span>";
-							$("#shedule").append(html);
-			});
-		}
-	});
-}
-
 
 ////////////////////////////////////////////////АУДИТОРИИ//////////////////////////////////////////////////////////////////////////////////////////
 
@@ -420,18 +367,6 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
       $('#spinnerFaculty').addClass('invisible');
   }
 }
-
-$(document).on('click','.grupCheckbox',function() { //событие на выбор чекбоксов по группам и запсиь в grupMas
-	
-});
-
- $(document).on('click','.weekCheckbox',function(event) { //событие на выбор чекбоксов по группам и запсиь в weekMas
-	load_grup_or_week_checkbox('weekCheckbox','[name = weekMas]');//[name = weekMas1]
- });
- 
- $(document).on('click','.weekCheckbox1',function() { //событие на выбор чекбоксов по группам и запсиь в weekMas
-	load_grup_or_week_checkbox('weekCheckbox1','[name = weekMas1]');
- });
  
 
 /*показ расписание общее, и отдельно по расписанию, блочное расписание*/

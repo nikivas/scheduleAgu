@@ -28,13 +28,13 @@
   require ('../css/table.css')
   import * as jq from '../../node_modules/jquery/dist/jquery.min.js'
   import * as ui from '../js/jquery.ui.js'
-  import * as module from'../js/loadData.js'
+
   require('../css/jquery.ui.css')
   export default
   {
       mounted()
       {
-          module.load_teacher()
+
       }
   }
 </script>

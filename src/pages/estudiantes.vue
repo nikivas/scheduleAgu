@@ -2,7 +2,7 @@
     <q-page expand position="top">
       <q-tabs v-model="tabsModel" align="center" color="dark">
         <q-tab name="xtab-1" class="fa fa-university" slot="title" label="Факультеты и направления"/>
-        <q-tab name="xtab-2" class="fa fa-users" slot="title" label="Поиск по группе" :hidden='true'/>
+        <q-tab name="xtab-2" class="fa fa-users" slot="title" label="Поиск по группе"/>
         <!--Блок поиск по факультетам-->
         <q-tab-pane class="text-center" name="xtab-1" keep-alive>
           <span>Факультет</span><br/>
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import * as module from'../js/loadData.js'
+import * as module from'../js/estudiantes.js'
 require ('../css/table.css')
 export default
 {

@@ -23,12 +23,12 @@
 </template>
 
 <script>
-    import * as module from'../js/loadData.js'
+    //import * as module from'../js/loadData.js'
     require ('../css/table.css')
     export default{
       mounted()
       {
-         module.load_korpus()
+         //module.load_korpus()
       }
     }
 </script>
