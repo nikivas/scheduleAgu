@@ -24,7 +24,7 @@
     export default{
       mounted()
       {
-         module.load_audiences();
+         module.levikorpus();
       }
     }
 </script>

@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.agu.schedule" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Расписание АГУ</name>
+    <name>Schedule AGU</name>
     <description>Schedule for agu</description>
     <author email="ddmasters@mail.ru" href="https://dmasters.online">
         DMastersTeam
     </author>
-    <content src="http://192.168.1.68:8080/index.html" />
+    <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -29,8 +29,8 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
-    <allow-navigation href="http://172.16.7.5:8080/index.html" />
     <allow-navigation href="http://192.168.1.68:8080/index.html" />
+    <allow-navigation href="http://172.16.7.5:8080/index.html" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^7.0.0" />
 </widget>

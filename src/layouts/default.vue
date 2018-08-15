@@ -40,18 +40,22 @@
           <q-item-side class="fas fa-chalkboard-teacher" />
           <q-item-main label="Преподаватели" />
         </q-item>
+        
         <q-item to="/audiences">
           <q-item-side class="fas fa-building" />
           <q-item-main label="Аудитории"/>
-        </q-item-->
-        <!--q-item to="/ads">
-          <q-item-side class="fas fa-exclamation"/>
-          <q-item-main label="Объявления"/-->
         </q-item>
-          <q-item to="/info">
+
+        <q-item to="/ads">
+          <q-item-side class="fas fa-exclamation"/>
+          <q-item-main label="Объявления" />
+        </q-item>
+
+        <q-item to="/info">
           <q-item-side class="fa fa-info"/>
           <q-item-main label="Информация"/>
         </q-item>
+      
       </q-list>
     </q-layout-drawer>
 

@@ -2,7 +2,7 @@
 import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
 import '../js/jquery.scroll.js';
-export function load_audiences()
+export function levikorpus()
 {
 	$(document).ready(function(){
 		try
@@ -11,6 +11,7 @@ export function load_audiences()
 			$("#spinnerKorpus").addClass("visible");
 			if(!localStorage.getItem('korpuses'))
 			{
+				$("#korpus").empty();
 				jQuery.ajax({
 					url:'http://raspisanie.asu.edu.ru/audience/korpus',
 					type:'POST',
@@ -26,14 +27,19 @@ export function load_audiences()
 						localStorage.getItem('choosen_korpus')
 						: korpuses.length!=0 ? $.trim(korpuses[0].id) :'no' ;
 						$("#korpus").val(choosen_korpus);
+						load_aud(choosen_korpus);
 					},
 					complete:function(){
+						$("#spinnerKorpus").addClass("invisible");
+					},
+					error:function(){
 						$("#spinnerKorpus").addClass("invisible");
 					}
 				});
 			}
 			else
 			{
+				$("#korpus").empty();
 				$("#spinnerKorpus").removeClass("invisible");
 				$('#spinnerKorpus').addClass('visible');
 				var korpuses =  jQuery.parseJSON(localStorage.getItem('korpuses'));
@@ -44,19 +50,143 @@ export function load_audiences()
 					.attr("value", $.trim(korpuses[i].id))
 					.text(korpuses[i].name));
 				}
-				var choosen_korpus = localStorage.getItem('choosen_korpus') ? localStorage.getItem('choosen_korpus') :
+				var choosen_korpus = localStorage.getItem('choosen_korpus') ? 
+				localStorage.getItem('choosen_korpus') :
 				korpuses.length!=0 ? $.trim(korpuses[0].id) :'no';
+				
 				$("#korpus").val(choosen_korpus);
+				load_aud(choosen_korpus);
 				$('#spinnerKorpus').addClass('invisible');
 			}
 		}
 		catch(ex)
 		{
-
+			$("#schedule").append(ex);
 		}
 	});
 
 }
 $(document).on('change','#korpus',function() { 
   	localStorage.setItem('choosen_korpus',$("#korpus").val());
+  	load_aud($("#korpus").val());
 });
+
+function load_aud(korpus)
+{
+	if(!localStorage.getItem('all_aud'))
+	{
+		$("#aud").empty();
+		$('#spinnerKorpus').removeClass('invisible');
+      	$('#spinnerKorpus').addClass('visible');
+      	jQuery.ajax({
+      		url:'http://raspisanie.asu.edu.ru/audience/audience',
+      		type:'POST',
+      		success : function(data){
+      			var result = jQuery.parseJSON(data);
+      			localStorage.setItem('all_aud', data);
+      			for (var i = 0; i < result.length; i++) 
+      			{
+					if(result[i].id_build==korpus)
+					{
+						$("#aud").append($("<option></option").
+						attr("value",$.trim(result[i].id)).text(result[i].name));
+					}
+      			}
+				var choosen_aud = localStorage.getItem('choosen_aud')
+				? localStorage.getItem('choosen_aud') : $('#aud option').eq(0).val();
+				$('#spec').val(choosen_aud);
+				localStorage.setItem('choosen_aud',choosen_aud);
+      		},
+      		complete:function(){
+				$('#spinnerKorpus').addClass('invisible');
+      		}
+      	});
+	}
+	else{
+		$('#spinnerKorpus').removeClass('invisible');
+		$('#spinnerKorpus').addClass('visible');
+		$("#aud").empty()
+		var all_aud = JSON.parse(localStorage.getItem('all_aud'));
+		for (var i = 0; i < all_aud.length; i++)
+		{
+			if(all_aud[i].id_build==korpus)
+			{
+				$("#aud").append($("<option></option").
+				attr("value",$.trim(all_aud[i].id)).text(all_aud[i].name));	
+			}
+		}
+		if ( $("#aud option[value='" + localStorage.getItem('choosen_aud') + "']").length!=0)
+		{
+			$('#aud').val(localStorage.getItem('choosen_aud'));
+		}
+		$('#spinnerKorpus').addClass('invisible');
+	}
+}
+$(document).on('change','#aud',function()
+{  
+  localStorage.setItem('choosen_aud',$(this).val());
+});
+$(document).on('click','#audButton',function()
+{  
+	findScheduleByAud();
+});
+
+function findScheduleByAud()
+{
+	try
+	{
+		$("#schedule").empty();
+		$("#audButton").prop('disabled',true);
+		$('#spinnerKorpus').removeClass('invisible');
+		$('#spinnerKorpus').addClass('visible');
+		var aud_value = $("#aud").val();
+		if(navigator.connection.type!=Connection.NONE)
+		{
+			jQuery.ajax({
+				url:'http://raspisanie.asu.edu.ru/audience/schedule/'+aud_value,
+				type:'POST',
+				success:function(data){
+					var result = jQuery.parseJSON(data);
+					if(!result.includes('учебные занятия отсутствуют'))
+					{
+						localStorage.setItem(aud_value,result);
+					}
+					$("#schedule").append(result);
+					$("#audButton").prop('disabled',false);
+				},
+				complete:function(){
+					$('#spinnerKorpus').addClass('invisible');
+					jQuery.scrollTo("#schedule",1000);
+				    $("#audButton").prop('disabled',false);
+				},
+				error:function()
+				{
+					var result = localStorage.getItem(aud_value);
+					result!=null? $("#schedule").append(result) 
+					: $("#schedule").append('Отсутствует соединение с интернетом.'+
+					'Расписание Отсутствует в кэше');
+					$('#spinnerKorpus').addClass('invisible');
+					jQuery.scrollTo("#schedule",1000);
+					$("#audButton").prop('disabled',false);
+				}
+			});
+		}
+		else
+		{
+			var result = localStorage.getItem(aud_value);
+			result!=null? $("#schedule").append(result) 
+			: $("#schedule").append('Отсутствует соединение с интернетом.'+
+			 'Расписание Отсутствует в кэше');
+			$('#spinnerKorpus').addClass('invisible');
+			jQuery.scrollTo("#schedule",1000);
+			$("#audButton").prop('disabled',false);
+		}
+	}
+	catch(ex)
+	{
+		$("#schedule").append(ex);
+		$('#spinnerKorpus').addClass('invisible');
+		jQuery.scrollTo("#schedule",1000);
+		$("#audButton").prop('disabled',false);
+	}
+}
