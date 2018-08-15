@@ -8,8 +8,10 @@
 			$( "#log" ).empty();	
 			$('[name = teacher]').val(message);
 		}
+		var birds =[{"id":'huisos',"value":"sucker"}];
+		console.log(birds);
 		$( "#birds" ).autocomplete({
-			source: "http://raspisanie.asu.edu.ru/function/teacher.php",
+			source: birds,
 			minLength: 2,
 			select: function( event, ui ) 
 			{

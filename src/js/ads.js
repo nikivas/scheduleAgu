@@ -1,5 +1,5 @@
 export function load_notes () {
-	if(navigator.connection.type==Connection.NONE)
+	if(navigator.connection.type!=Connection.NONE)
 	{
 		$("#spinnerAds").removeClass("invisible");
 		$("#spinnerAds").addClass("visible");
