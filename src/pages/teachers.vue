@@ -7,11 +7,6 @@
       role="textbox" aria-autocomplete="list" aria-haspopup="true"/><br/>
       <input type="text" name="teacher" id="log">
       <div>
-      <div>Неделя :</div><br>
-      Числитель<input class="weekCheckboxTea" type="checkbox" name="numerator" value="1">
-      Знаменатель<input class="weekCheckboxTea" type="checkbox" name="denominator" value="2">
-      <input type="text" name="weekMasTea" hidden> <br/><br/>
-      </div>
       <q-btn class="button" id="search_teacher" color="secondary" label="Показать"/>
       <div id="schedule"></div>
        <q-inner-loading id="spinnerTeacher" :visible="false">
