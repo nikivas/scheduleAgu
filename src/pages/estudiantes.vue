@@ -25,7 +25,7 @@
         <!-- Блок поиск по группам -->
         <q-tab-pane class="text-center" name="xtab-2" keep-alive>
             <span>Группа :</span><br/>
-           <input type="text" name="grupa" class="txtInput" id="grup" value="" placeholder="Например рт31" /><br/><br/>
+           <input type="text" name="grupa" class="txtInput"  id="grup" v-model="cocksucker" placeholder="Например рт31" /><br/><br/>
            <q-btn color="amber" class="text-black studentButton" label="Узнать" 
            id="studentButton2"/><br/><br/>
            <div id="schedule2"></div>
@@ -56,17 +56,17 @@ export default
       ],
       module,
       loading:false,
-      checked:false
+      checked:false,
+      cocksucker:localStorage.getItem("grup_name")
     }
   },
   mounted()
   {
       module.load_faculty();
-      module.current_group();
   },
   created()
   {
-     module.load_faculty()
+     module.load_faculty();
   }
 }
 </script>

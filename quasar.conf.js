@@ -5,7 +5,7 @@ module.exports = function (ctx) {
     // app plugins (/src/plugins)
     plugins: [
       'i18n',
-      'axios'
+      'axios',
     ],
     css: [
       'app.styl'
@@ -74,14 +74,14 @@ module.exports = function (ctx) {
       // Quasar plugins
       plugins: [
         'Notify',
-        'LocalStorage'
+        'LocalStorage',
+        'Dialog'
       ]
       // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
       // i18n: 'de' // Quasar language
     },
     // animations: 'all' --- includes all animations
-    animations: [
-    ],
+    animations: 'all' ,
     pwa: {
       // workboxPluginMode: 'InjectManifest',
       // workboxOptions: {},
