@@ -85,6 +85,7 @@ function findScheduleOfTeacher (id_teacher) {
 		$("#search_teacher").prop('disabled',true);
 		$("#spinnerTeacher").removeClass('invisible');
 		$("#spinnerTeacher").addClass('visible');
+		$("#search_teacher").text('Идет загрузка...');
 		var save_teacher = $("#birds").val();
 		if(navigator.connection.type!=Connection.NONE)
 		{
@@ -104,12 +105,14 @@ function findScheduleOfTeacher (id_teacher) {
 					$("#spinnerTeacher").addClass('invisible');
 					jQuery.scrollTo("#schedule",1000);
 					$("#search_teacher").prop('disabled',false);
+					$("#search_teacher").text('ПОКАЗАТЬ');
 				},
 				error:function (err) {
 					var result = JSON.parse(localStorage.getItem(save_teacher));
 					result!=null? $("#schedule").append(result) : $("#schedule").append(err);
 					$("#spinnerTeacher").addClass('invisible');
 					$("#search_teacher").prop('disabled',false);
+					$("#search_teacher").text('ПОКАЗАТЬ');
 				}
 			});
 		}
@@ -121,6 +124,7 @@ function findScheduleOfTeacher (id_teacher) {
 			$("#spinnerTeacher").addClass('invisible');
 			$("#search_teacher").prop('disabled',false);
 			jQuery.scrollTo("#schedule",1000);
+			$("#search_teacher").text('ПОКАЗАТЬ');
 		}
 	} 
 	catch(e) {
