@@ -3,14 +3,17 @@ import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
 import '../js/jquery.scroll.js';
 
- $(document).ready(function(){
-   $("#grup").val(localStorage.getItem('grup_name'));
- });
+export function current_group()
+{
+  var grupa = localStorage.getItem('grup_name');
+   $("#grup").val(grupa);  
+}
 export function load_faculty() { /*загрузка факультетов*/
   $(document).ready(function()
   {
     if(!localStorage.getItem('faculties'))
     {
+
         jQuery.ajax({
           url: 'http://raspisanie.asu.edu.ru/student/faculty',
           type: 'POST',
@@ -417,7 +420,7 @@ function findScheduleByGroupName (groupName)
     try
     {
         var group = groupName;
-        localStorage.setItem('grup_name',groupName);
+        localStorage.setItem('grup_name',group);
         $("#studentButton2").prop('disabled',true);
         $("#spinnerFaculty").removeClass("invisible");
         $("#spinnerFaculty").addClass("visible");

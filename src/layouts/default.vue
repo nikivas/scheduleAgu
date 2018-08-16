@@ -51,6 +51,11 @@
           <q-item-main label="Объявления" />
         </q-item>
 
+       <q-item to="/help">
+          <q-item-side class="fas fa-question"/>
+          <q-item-main label="Помощь" />
+        </q-item>
+
         <q-item to="/info">
           <q-item-side class="fa fa-info"/>
           <q-item-main label="Информация"/>
