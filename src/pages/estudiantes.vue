@@ -6,11 +6,11 @@
         <!--Блок поиск по факультетам-->
         <q-tab-pane class="text-center" name="xtab-1" keep-alive>
           <span>Факультет</span><br/>
-          <select class="select-style" id = "facul" name="Faculty"></select><br/><br/>
+          <select class="select-style animated fadeInLeft" id = "facul" name="Faculty"></select><br/><br/>
           <span>Специальность</span><br/>
-          <select class="select-style" id = "spec" name="specaility"></select><br/><br/>
+          <select class="select-style animated fadeInRight" id = "spec" name="specaility"></select><br/><br/>
           <span>Курс : </span>
-          <div id="kurs">
+          <div id="kurs" class="animated pulse">
           </div><br/>
           <p>Группы</p>
             <div id="groups"></div>
@@ -25,7 +25,7 @@
         <!-- Блок поиск по группам -->
         <q-tab-pane class="text-center" name="xtab-2" keep-alive>
             <span>Группа :</span><br/>
-           <input type="text" name="grupa" class="txtInput"  id="grup" v-model="cocksucker" placeholder="Например рт31" /><br/><br/>
+           <input type="text" name="grupa" class="txtInput animated pulse"  id="grup" v-model="cocksucker" placeholder="Например рт31" /><br/><br/>
            <q-btn color="amber" class="text-black studentButton" label="Узнать" 
            id="studentButton2"/><br/><br/>
            <div id="schedule2"></div>

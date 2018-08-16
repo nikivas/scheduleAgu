@@ -211,13 +211,13 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
           if(choosen_groups.includes(grupie[i].GRUP)==true)
           {
             appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
-            "' name='grupovuha' checked class='grupCheckbox form-radio' />"
+            "' name='grupovuha' checked class='grupCheckbox form-radio animated bounceIn' />"
                                + grupie[i].GRUP;
           }
           else
           {
               appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
-            "' name='grupovuha' class='grupCheckbox form-radio' />"
+            "' name='grupovuha' class='grupCheckbox form-radio animated bounceIn' />"
                                + grupie[i].GRUP;
           }
           $("#groups").append(appended_result);

@@ -7,9 +7,11 @@
       <div class="text-weight-medium">Email : <a href="mailto:ddmaster@mail.ru">
       ddmasters@mail.ru</a></div>
     </div>
-    <div class="fixed-bottom-right q-caption">
-        © Developed by Serdar Durdyev
+    <div class="fixed-bottom-right">
+       <img src="../statics/dmasters.png"/>
+      <div class="q-caption">© Developed by Serdar Durdyev</div>
     </div>
+     
   </q-page>
 </template>
 

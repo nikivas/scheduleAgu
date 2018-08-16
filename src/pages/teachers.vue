@@ -3,7 +3,7 @@
     <br>
     <div class="text-center">
       <p>ФИО преподавателя</p>
-      <input id="birds" class="ui-autocomplete-input txtInput" value="" autocomplete="off" placeholder="Введите ФИО преподавателя"
+      <input id="birds" class="ui-autocomplete-input txtInput animated bounceInRight" value="" autocomplete="off" placeholder="Введите ФИО преподавателя"
       role="textbox" aria-autocomplete="list" aria-haspopup="true"/><br/>
       <input type="text" name="teacher" id="log" hidden="true"><br/>
       <q-btn class="button" id="search_teacher" color="secondary" label="Показать"/>
