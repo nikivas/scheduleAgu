@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar'
-import {$q} from 'quasar'
+
 $(document).on('click','#load_changes',function(){
 	update();
 });
@@ -9,6 +9,10 @@ function update () {
 		$("#fidgetSpinner").removeClass("hidden");
 		load_faculty();
 		load_spec();
+		load_grups();
+		load_teachers();
+		load_korpus();
+		load_audi();
 	}
 }
 function load_faculty()
@@ -25,7 +29,7 @@ function load_faculty()
 			}
 		},
 		error:function (data) {
-			$("#fidgetSpinner").addClass("hidden");
+
 		}
 	});
 }
@@ -41,14 +45,86 @@ function load_spec () {
 			}
 		 },
 		 complete:function () {
-		 	$("#fidgetSpinner").addClass("hidden");
-			$q.Dialog.dialog({
-			title: 'Alert',
-			message: 'Modern HTML5 front-end framework on steroids.'
-			});
 		 },
 		 error:function () {
-			$("#fidgetSpinner").addClass("hidden");
+
 		}
 	});
+}
+function load_grups () 
+{
+    jQuery.ajax({
+      url: 'http://raspisanie.asu.edu.ru/student/grup',
+      type: 'POST',
+      success: function(data)
+      {
+      	var result = JSON.parse(data);
+      	if(result!=null)
+      	{
+        	localStorage.setItem('all_groupies',data);
+    	}
+      },
+      error:function(){
+
+      },
+
+    });
+}
+function load_teachers()
+{
+	$.ajax({
+		url:'http://raspisanie.asu.edu.ru/teacher/all',
+		type:'GET',
+		success:function(data)
+		{
+			var birds = JSON.parse(data);
+			if(birds!=null)
+			{
+				localStorage.setItem('birds',data);
+			}
+		},
+	});
+}
+function load_korpus()
+{
+	jQuery.ajax({
+		url:'http://raspisanie.asu.edu.ru/audience/korpus',
+		type:'POST',
+		success:function(data)
+		{
+			var korpuses = jQuery.parseJSON(data);
+			if(korpuses!=null)
+			{
+				localStorage.setItem('korpuses',data);
+			}
+		}
+	});
+}
+function load_audi()
+{
+	jQuery.ajax({
+  		url:'http://raspisanie.asu.edu.ru/audience/audience',
+  		type:'POST',
+  		success:function(data){
+  			var result = jQuery.parseJSON(data);
+  			if(result!=null){localStorage.setItem('all_aud', data);}
+  		},
+  		complete:function()
+  		{
+  			$("#fidgetSpinner").addClass("hidden");
+  			Dialog.create({
+  				title:'Успех!',
+  				message:'Успешная загрузка данных'
+  			});
+  		},
+  		error : function()
+  		{
+  			$("#fidgetSpinner").addClass("hidden");
+  			Dialog.create({
+  				title:'Ошибка!',
+  				message:'Ошибка при загрузке данных'
+  			});
+  		}
+
+  	});
 }
