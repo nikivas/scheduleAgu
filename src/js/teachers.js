@@ -1,6 +1,6 @@
-  import * as jq from '../../node_modules/jquery/dist/jquery.min.js';
-  import * as ui from '../js/jquery.ui.js';
-
+import * as ui from '../js/jquery.ui.js';
+import scrollTo  from '../js/jquery.scroll.js';
+import '../js/jquery.scroll.js';
 export function load_teacher() 
 { 
 	//загрузка списка преподавателей
@@ -69,6 +69,61 @@ export function load_teacher()
 }
 function log( message )
 {
-	$( "#log" ).empty();	
+	$( "#log").val('');	
 	$('[name = teacher]').val(message);
+}
+$(document).on('click','#search_teacher',function(){
+	$("#schedule").empty();
+	if($("#log")!='')
+	{
+		findScheduleOfTeacher($("#log").val());
+	}
+})
+function findScheduleOfTeacher (id_teacher) {
+	try 
+	{
+		$("#search_teacher").prop('disabled',true);
+		$("#spinnerTeacher").removeClass('invisible');
+		$("#spinnerTeacher").addClass('visible');
+		var save_teacher = $("#birds").val();
+		if(navigator.connection.type!=Connection.NONE)
+		{
+			$.ajax({
+				url:'http://raspisanie.asu.edu.ru/teacher/getschedulejson/',
+				type:'POST',
+				data:{id:id_teacher},
+				success:function (data) {
+					var result = JSON.parse(data);
+					if(!result.includes('отсутств'))
+					{
+						localStorage.setItem(save_teacher, data);
+					}
+					$("#schedule").append(result);
+				},
+				complete:function(){
+					$("#spinnerTeacher").addClass('invisible');
+					jQuery.scrollTo("#schedule",1000);
+					$("#search_teacher").prop('disabled',false);
+				},
+				error:function (err) {
+					var result = JSON.parse(localStorage.getItem(save_teacher));
+					result!=null? $("#schedule").append(result) : $("#schedule").append(err);
+					$("#spinnerTeacher").addClass('invisible');
+					$("#search_teacher").prop('disabled',false);
+				}
+			});
+		}
+		else
+		{
+			var result = JSON.parse(localStorage.getItem(save_teacher));
+			result!=null? $("#schedule").append(result)
+			 : $("#schedule").append("<p>Отсутствует соединение с сервером</p>");
+			$("#spinnerTeacher").addClass('invisible');
+			$("#search_teacher").prop('disabled',false);
+			jQuery.scrollTo("#schedule",1000);
+		}
+	} 
+	catch(e) {
+		$("#schedule").append(e);
+	}
 }
