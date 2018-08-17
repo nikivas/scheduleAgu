@@ -143,11 +143,13 @@ export function preloaded_kurses()
 $(document).on('change','#facul',function() {  //событие на изменение факультета
   localStorage.setItem('faculty_choosen',$("#facul").val());
 	load_specialty($(this).val());
+  localStorage.removeItem('choosen_groups');
 });
 
 $(document).on('change','#spec',function() {  //событие на изменение специальности
   localStorage.setItem('choosen_speciality_item',$(this).val());
   load_grup($('input[name="kurs"]:checked').val());
+  localStorage.removeItem('choosen_groups');
 });
 
 
@@ -226,6 +228,7 @@ function load_grup(kurs) { //загрузка группы, по умолчан�
         }
       }
       $('#spinnerFaculty').addClass('invisible');
+
   }
 }
  
@@ -278,7 +281,6 @@ $(document).on('click','#studentButton1',function()
   ajaxStudent();
   return false;
 });
-
 function ajaxStudent()
 {
   try

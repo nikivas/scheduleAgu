@@ -45,7 +45,6 @@ export function load_teacher()
 		}
 		else
 		{
-			console.log('сучка с маршрутки');
 			birds = JSON.parse(localStorage.getItem('birds'));
 			var rich_sex = $.map(birds,function(element)
 			{
