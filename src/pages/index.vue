@@ -8,13 +8,6 @@
         Email: <a href="mailto:rastyam.aminov@asu.edu.ru">rastyam.aminov@asu.edu.ru</a>
       </p>
     </div>
-    <div class="fixed-bottom-right">
-      <a href="#" onclick="window.open('https://www.dmasters.online', '_system');">
-        <img src="../statics/dmasters.png" id="logo_dmasters" />
-     </a>
-      <div class="signature">© Developed by Serdar Durdyev</div>
-    </div>
-     
   </q-page>
 </template>
 
@@ -23,13 +16,7 @@ export default
 {
   name: 'PageIndex',
   mounted(){
-      setInterval(function () {
-        $("#logo_dmasters").removeClass('animateMe');
-        setTimeout(function(){
-          $("#logo_dmasters").addClass('animateMe');
-        },2000)
 
-      },7000);
   }
 }
 </script>
@@ -49,8 +36,5 @@ export default
   {
     font-size:0.75em;
   }
-  .animateMe
-  {
-     animation: flash 2s;
-  }
+
 </style>

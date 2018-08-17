@@ -7,6 +7,7 @@ export function load_teacher()
 	try 
 	{
 		var birds=[];
+		$("#teacher_spinner").removeClass("hidden");
 		if(!localStorage.getItem('birds'))
 		{
 			$.ajax({
@@ -15,7 +16,7 @@ export function load_teacher()
 				success:function(data)
 				{
 					birds = JSON.parse(data);
-					localStorage.setItem('birds',data);I
+					localStorage.setItem('birds',data);
 				},
 				complete:function(){
 					var rich_sex = {};
@@ -23,25 +24,28 @@ export function load_teacher()
 						return {
 							id:element.id,
 							value:element.fio
-						}
+						};
 					});
 					$("#birds").autocomplete(
 					{
 						source: rich_sex,
-						minLength: 2,
+						minLength: 1,
 						select: function( event, ui ) 
 						{
 							log( ui ? ui.item.id : this.value );
 						}			
 					});
+					$("#teacher_spinner").addClass("hidden");
 				},
-				error:function(){
-
+				error:function(err){
+					$("#teacher_spinner").addClass("hidden");
+					$("#schedule").append(err);
 				}
 			});
 		}
 		else
 		{
+			console.log('сучка с маршрутки');
 			birds = JSON.parse(localStorage.getItem('birds'));
 			var rich_sex = $.map(birds,function(element)
 			{
@@ -53,13 +57,13 @@ export function load_teacher()
 			$("#birds").autocomplete(
 			{
 				source: rich_sex,
-				minLength: 2,
+				minLength: 1,
 				select: function( event, ui ) 
 				{
 					log( ui ? ui.item.id : this.value );
 				}			
 			});
-
+			$("#teacher_spinner").addClass("hidden");
 		}
 	} 
 	catch(e) 
