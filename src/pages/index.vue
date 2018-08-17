@@ -2,13 +2,16 @@
   <q-page class="flex flex-center">
     <div class="text-center">
       <img src="../statics/logo_agu.png" id="logo_agu"><br/>
-      <div class="text-weight-medium">г.Астрахань ул.Татищева 20А,</div>
-      <div class="text-weight-medium">Телефон : 8(8512) 610675</div>
-      <div class="text-weight-medium">Email : <a href="mailto:ddmaster@mail.ru">
-      ddmasters@mail.ru</a></div>
+      <p class="text-center q-caption">
+        Адрес : г.Астрахань, ул.Татищева 20А <br>
+        Телефон : +7(8512)61-06-75 <br>
+        Email: <a href="mailto:rastyam.aminov@asu.edu.ru">rastyam.aminov@asu.edu.ru</a>
+      </p>
     </div>
     <div class="fixed-bottom-right">
-       <img src="../statics/dmasters.png" id="logo_dmasters" />
+      <a href="#" onclick="window.open('https://www.dmasters.online', '_system');">
+        <img src="../statics/dmasters.png" id="logo_dmasters" />
+     </a>
       <div class="signature">© Developed by Serdar Durdyev</div>
     </div>
      
@@ -18,14 +21,23 @@
 <script>
 export default
 {
-  name: 'PageIndex'
+  name: 'PageIndex',
+  mounted(){
+      setInterval(function () {
+        $("#logo_dmasters").removeClass('animateMe');
+        setTimeout(function(){
+          $("#logo_dmasters").addClass('animateMe');
+        },2000)
+
+      },7000);
+  }
 }
 </script>
 
 <style>
   #logo_agu
   {
-    max-height: 42vh;
+    max-width:10em;
   }
   #logo_dmasters
   {
@@ -36,5 +48,9 @@ export default
   .signature
   {
     font-size:0.75em;
+  }
+  .animateMe
+  {
+     animation: flash 2s;
   }
 </style>
