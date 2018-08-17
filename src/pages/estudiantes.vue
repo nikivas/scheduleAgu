@@ -28,7 +28,9 @@
            <input type="text" name="grupa" class="txtInput animated pulse"  id="grup" v-model="cocksucker" placeholder="Например рт31" /><br/><br/>
            <q-btn color="amber" class="text-black studentButton" label="Узнать" 
            id="studentButton2"/><br/><br/>
-           <div id="schedule2"></div>
+           <div id="schedule2" keep-alive>
+             <div v-for="mamka_admina in mamkin"><div v-html="mamka_admina"></div></div>
+           </div>
         </q-tab-pane>
         <!-- Конец-->
       </q-tabs>
@@ -57,16 +59,50 @@ export default
       module,
       loading:false,
       checked:false,
-      cocksucker:localStorage.getItem("grup_name")
+      cocksucker:localStorage.getItem("grup_name"),
+      mamkin:[]
     }
   },
   mounted()
   {
+      this.load_schedule_choosen_kurs();
+      this.load_schedule_byGroupName();
       module.load_faculty();
   },
   created()
   {
      module.load_faculty();
+  },
+  methods:
+  {
+     load_schedule_choosen_kurs()
+     {
+        //append previous selection
+        if(localStorage.getItem("choosen_groups"))
+        {
+           $("#schedule").empty();
+           var choosen_groups = JSON.parse(localStorage.getItem("choosen_groups"));
+           $.each(choosen_groups, function(index,value){
+              var schedule = localStorage.getItem(value);
+              if(schedule!=null)
+              {
+                $("#schedule").append(schedule);
+              }
+           });
+        }
+     },
+     load_schedule_byGroupName()
+     {
+        if(localStorage.getItem('grup_name'))
+        {
+            var group = localStorage.getItem('grup_name');
+            var get_schedule = localStorage.getItem(group);
+            if(get_schedule!=null)
+            {
+                this.mamkin.push(get_schedule)
+            }
+        }
+     }
   }
 }
 </script>
