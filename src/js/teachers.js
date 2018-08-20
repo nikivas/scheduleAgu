@@ -93,11 +93,18 @@ $(document).on('click','#search_teacher',function(){
 				return true;
 			}
 			});
-			for_research_array.forEach( function(element, index) {
-				$("#search_teacher").prop('disabled',true);
-				$("#teacher_spinner").removeClass('hidden');
-				findScheduleOfTeacher(element.id,false);
-			});
+			if(for_research_array.length!=0)
+			{
+				for_research_array.forEach( function(element, index) {
+					$("#search_teacher").prop('disabled',true);
+					$("#teacher_spinner").removeClass('hidden');
+					findScheduleOfTeacher(element.id,false);
+				});
+			}
+			else
+			{
+				$("#schedule").append("Данные Отсутствуют");
+			}
 		}
 	}
 });

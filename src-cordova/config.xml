@@ -5,7 +5,7 @@
     <author email="ddmasters@mail.ru" href="https://dmasters.online">
         DMastersTeam
     </author>
-    <content src="http://172.16.7.5:8080/index.html" />
+    <content src="index.html" />
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

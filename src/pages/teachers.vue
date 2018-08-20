@@ -5,7 +5,7 @@
       <p>ФИО преподавателя</p>
       <input id="birds" @input="clear" class="ui-autocomplete-input txtInput animated bounceInRight" value="" autocomplete="off" placeholder="Введите ФИО преподавателя"
       role="textbox" aria-autocomplete="list" aria-haspopup="true"/><br/>
-      <input type="text" name="teacher" id="log"><br/>
+      <input type="text" name="teacher" id="log" hidden=""><br/>
       <q-btn class="button" id="search_teacher" color="secondary" label="Показать"/>
       <div id="schedule"></div>
       <q-inner-loading id="teacher_spinner"  class="hidden" :visible="true">
