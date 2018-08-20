@@ -1,6 +1,6 @@
 import * as ui from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
-import '../js/jquery.scroll.js';
+
 export function load_teacher() 
 { 
 	//загрузка списка преподавателей
@@ -135,7 +135,6 @@ function findScheduleOfTeacher (id_teacher,_scroll) {
 					$("#teacher_spinner").addClass('hidden');
 					if(_scroll==true)
 					{
-						console.log('scroll');
 						jQuery.scrollTo("#schedule",1000);
 					}
 				},

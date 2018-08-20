@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////HistoryAPI////////////////////////////////////////////////
 import autocomplete  from '../js/jquery.ui.js';
 import scrollTo  from '../js/jquery.scroll.js';
-import '../js/jquery.scroll.js';
 
 export function current_group()
 {
@@ -64,7 +63,7 @@ export function load_faculty() { /*загрузка факультетов*/
   });
 }
 
-function load_specialty(id_spec) {   //специальностей, по выбранному факультету
+export function load_specialty(id_spec) {   //специальностей, по выбранному факультету
   //При первом запуске
   if(!localStorage.getItem('all_specialities'))//Подгружены ли все специальности
   {

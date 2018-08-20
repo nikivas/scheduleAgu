@@ -32,10 +32,10 @@
         link
         inset-delimiter
       >
-      <!--q-item to="/mywaves">
+      <q-item to="/mywaves">
           <q-item-side class="fa fa-book" />
           <q-item-main label="Мое Расписание" />
-        </q-item-->
+        </q-item>
 
         <q-item to="/estudiantes">
           <q-item-side class="fa fa-users" />
