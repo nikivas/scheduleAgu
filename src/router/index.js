@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import routes from './routes'
 
 Vue.use(VueRouter)
-global.jQuery = require('jquery');
+global.jQuery = require('../../node_modules/jquery/dist/jquery.min.js');
 var $ = global.jQuery;
 window.$ = $;
 const Router = new VueRouter({
@@ -17,7 +17,7 @@ const Router = new VueRouter({
    */
 
   // Leave as is and change from quasar.conf.js instead!
-  mode: process.env.VUE_ROUTER_MODE,
+  mode: 'history',
   base: process.env.VUE_ROUTER_BASE,
   scrollBehavior: () => ({ y: 0 }),
   routes

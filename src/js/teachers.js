@@ -72,16 +72,34 @@ export function load_teacher()
 }
 function log( message )
 {
-	$( "#log").val('');	
+	$( "#log").empty();	
 	$('[name = teacher]').val(message);
 }
 $(document).on('click','#search_teacher',function(){
 	$("#schedule").empty();
-	if($("#log")!='')
+	if(($("#log").val())!='')
 	{
 		findScheduleOfTeacher($("#log").val());
 	}
-})
+	else 
+	{
+		if($("#birds").val()!='')
+		{
+			var bird_name = $("#birds").val();
+			console.log(bird_name);
+			var birds = JSON.parse(localStorage.getItem('birds'));
+			var for_research_array = birds.filter(function(item){
+				if(item.fio.toLowerCase().includes(bird_name.toLowerCase()))
+				{
+					return true;
+				}
+			});
+			$.each(for_research_array,function(index,item){
+				findScheduleOfTeacher(item.id);
+			});
+		}
+	}
+});
 function findScheduleOfTeacher (id_teacher) {
 	try 
 	{
