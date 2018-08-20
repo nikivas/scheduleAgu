@@ -29,7 +29,7 @@ export function load_teacher()
 					$("#birds").autocomplete(
 					{
 						source: rich_sex,
-						minLength: 1,
+						minLength: 3,
 						select: function( event, ui ) 
 						{
 							log( ui ? ui.item.id : this.value );
@@ -56,7 +56,7 @@ export function load_teacher()
 			$("#birds").autocomplete(
 			{
 				source: rich_sex,
-				minLength: 1,
+				minLength: 3,
 				select: function( event, ui ) 
 				{
 					log( ui ? ui.item.id : this.value );
@@ -79,33 +79,32 @@ $(document).on('click','#search_teacher',function(){
 	$("#schedule").empty();
 	if(($("#log").val())!='')
 	{
-		findScheduleOfTeacher($("#log").val());
+		findScheduleOfTeacher($("#log").val(),true);
 	}
 	else 
 	{
-		if($("#birds").val()!='')
+		if($("#birds").val()!='' && $("#birds").val().length>=3)
 		{
 			var bird_name = $("#birds").val();
-			console.log(bird_name);
 			var birds = JSON.parse(localStorage.getItem('birds'));
 			var for_research_array = birds.filter(function(item){
-				if(item.fio.toLowerCase().includes(bird_name.toLowerCase()))
-				{
-					return true;
-				}
+			if(item.fio.toLowerCase().includes(bird_name.toLowerCase()))
+			{
+				return true;
+			}
 			});
-			$.each(for_research_array,function(index,item){
-				findScheduleOfTeacher(item.id);
+			for_research_array.forEach( function(element, index) {
+				$("#search_teacher").prop('disabled',true);
+				$("#teacher_spinner").removeClass('hidden');
+				findScheduleOfTeacher(element.id,false);
 			});
 		}
 	}
 });
-function findScheduleOfTeacher (id_teacher) {
+function findScheduleOfTeacher (id_teacher,_scroll) {
 	try 
 	{
 		$("#search_teacher").prop('disabled',true);
-		$("#spinnerTeacher").removeClass('invisible');
-		$("#spinnerTeacher").addClass('visible');
 		$("#search_teacher").text('Идет загрузка...');
 		var save_teacher = $("#birds").val();
 		if(navigator.connection.type!=Connection.NONE)
@@ -124,14 +123,18 @@ function findScheduleOfTeacher (id_teacher) {
 				},
 				complete:function(){
 					$("#spinnerTeacher").addClass('invisible');
-					jQuery.scrollTo("#schedule",1000);
 					$("#search_teacher").prop('disabled',false);
 					$("#search_teacher").text('ПОКАЗАТЬ');
+					$("#teacher_spinner").addClass('hidden');
+					if(_scroll==true)
+					{
+						console.log('scroll');
+						jQuery.scrollTo("#schedule",1000);
+					}
 				},
 				error:function (err) {
 					var result = JSON.parse(localStorage.getItem(save_teacher));
 					result!=null? $("#schedule").append(result) : $("#schedule").append(err);
-					$("#spinnerTeacher").addClass('invisible');
 					$("#search_teacher").prop('disabled',false);
 					$("#search_teacher").text('ПОКАЗАТЬ');
 				}
@@ -142,7 +145,6 @@ function findScheduleOfTeacher (id_teacher) {
 			var result = JSON.parse(localStorage.getItem(save_teacher));
 			result!=null? $("#schedule").append(result)
 			 : $("#schedule").append("<p>Отсутствует соединение с сервером</p>");
-			$("#spinnerTeacher").addClass('invisible');
 			$("#search_teacher").prop('disabled',false);
 			jQuery.scrollTo("#schedule",1000);
 			$("#search_teacher").text('ПОКАЗАТЬ');
