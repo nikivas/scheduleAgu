@@ -138,7 +138,6 @@ export function preloaded_kurses()
   $("input:radio[name='kurs'][value='"+localStorage.getItem('choosen_kurs')+"']").prop('checked', true);
 }
 
-
 $(document).on('change','#facul',function() {  //событие на изменение факультета
   localStorage.setItem('faculty_choosen',$("#facul").val());
 	load_specialty($(this).val());
@@ -150,7 +149,6 @@ $(document).on('change','#spec',function() {  //событие на измене
   load_grup($('input[name="kurs"]:checked').val());
   localStorage.removeItem('choosen_groups');
 });
-
 
 $(document).on('click','.kursCheckbox',function() { 
     if($(this).attr('value')!=localStorage.getItem('choosen_kurs'))

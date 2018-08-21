@@ -77,7 +77,7 @@
 
 <script>
 import { openURL } from 'quasar'
-
+require ('../css/table.css')
 export default {
   name: 'LayoutDefault',
   data () {

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-	require ('../css/table.css');
 	import axios from 'axios';
+	import { Notify } from 'quasar';
 	export default
 	{
 		data()
@@ -33,6 +33,9 @@
 		{
 			this.load_faculties();
 		},
+		created()
+		{
+		},
 		methods:
 		{
 			setInvisible()
@@ -44,19 +47,36 @@
 				 if(!localStorage.getItem('faculties'))
 				 {
 				 	axios.post('http://raspisanie.asu.edu.ru/student/faculty')
-				 	.then(function(data){
+				 	.then(function(data)
+				 	{
 				 		console.log(data);
 				 		var json = data.data;
-           				localStorage.setItem('faculties',JSON.stringify(json));
-						for (var i = 0; i < json.length; i++) {
-						$("#facul")
-						.append($("<option></option>")
-						.attr("value", $.trim(json[i].id))
-						.text(json[i].name));
+	       				localStorage.setItem('faculties',JSON.stringify(json));
+						for (var i = 0; i < json.length; i++) 
+						{
+							$("#facul")
+							.append($("<option></option>")
+							.attr("value", $.trim(json[i].id))
+							.text(json[i].name));
 						}
-				 	}).exception(function(error){
-				 		
+				 	}).catch(function(error){
+						Notify.create({
+						message:"Произошла ошибка. Обратитесь к администратору.",
+						type:'negative',
+						position: 'bottom'
+						});
 				 	});
+				 }
+				 else
+				 {
+					var fac =  jQuery.parseJSON(localStorage.getItem('faculties'));
+					for (var i = 0; i < fac.length; i++)
+					{
+					$("#facul")
+					.append($("<option></option>")
+					.attr("value", $.trim(fac[i].id))
+					.text(fac[i].name));
+					}
 				 }
 			},
 			load_speciality()
