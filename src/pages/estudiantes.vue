@@ -8,7 +8,8 @@
           <span>Факультет</span><br/>
           <select class="select-style animated fadeInLeft"  v-on:change="faculChanged" id = "facul" name="Faculty"></select><br/><br/>
           <span>Специальность</span><br/>
-          <select class="select-style animated fadeInRight" id = "spec" name="specaility"></select><br/><br/>
+          <select class="select-style animated fadeInRight" id = "spec"
+           v-on:change="specChanged($event)" name="specaility"></select><br/><br/>
           <span>Курс : </span>
           <div id="kurs" class="animated pulse">
           </div><br/>
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default
 {
 
@@ -100,7 +101,8 @@ export default
     },
     ...mapActions(
         {
-          faculChanged: 'estudiantes/faculChanged'
+          faculChanged: 'estudiantes/faculChanged',
+          specChanged : 'estudiantes/specChanged',
         }
       ),
   },

@@ -65,6 +65,7 @@ export function load_faculty() { /*загрузка факультетов*/
 
 export function load_specialty(id_spec) {   //специальностей, по выбранному факультету
   //При первом запуске
+  console.log(id_spec);
   if(!localStorage.getItem('all_specialities'))//Подгружены ли все специальности
   {
       $('#spinnerFaculty').removeClass('invisible');
@@ -124,6 +125,7 @@ export function load_specialty(id_spec) {   //специальностей, по
      load_grup($('input[name="kurs"]:checked').val());
   }
 }
+
 export function preloaded_kurses()
 {
   $('#kurs').empty();
@@ -137,15 +139,13 @@ export function preloaded_kurses()
   $("#kurs").append(str);
   $("input:radio[name='kurs'][value='"+localStorage.getItem('choosen_kurs')+"']").prop('checked', true);
 }
+
 export function faculChanged()
 {
-	console.log('dispatched');
-  	localStorage.setItem('faculty_choosen',$("#facul").val());
+	localStorage.setItem('faculty_choosen',$("#facul").val());
 	load_specialty($("#facul").val());
-  	localStorage.removeItem('choosen_groups');
 }
-
-$(document).on('change','#spec',function() {  //событие на изменение специальности
+/*$(document).on('change','#spec',function() {  //событие на изменение специальности
   localStorage.setItem('choosen_speciality_item',$(this).val());
   load_grup($('input[name="kurs"]:checked').val());
   localStorage.removeItem('choosen_groups');
@@ -174,8 +174,9 @@ $(document).on('click','.grupCheckbox',function(){
         localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
      }
     
-});
-function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
+});*/
+export function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
+  console.log('курс ' +kurs);
   $('#spinnerFaculty').removeClass('invisible');
   $('#spinnerFaculty').addClass('visible');
   $("#message_info").text('Загрузка курсов');
@@ -279,7 +280,7 @@ $(document).on('click','#studentButton1',function()
   ajaxStudent();
   return false;
 });
-function ajaxStudent()
+export function ajaxStudent()
 {
   try
   {
@@ -415,7 +416,7 @@ $(document).on('click','#studentButton2',function(){
     }
     return true;
 });
-function findScheduleByGroupName (groupName)
+export function findScheduleByGroupName (groupName)
 {
     try
     {
