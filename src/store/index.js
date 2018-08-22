@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import example from './module-example'
+import estudiantes from './estudiantes'
 
 import VueResource from 'vue-resource'
 Vue.use(Vuex)
@@ -16,7 +16,7 @@ Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
 const store = new Vuex.Store({
   modules: {
-    example,
+    estudiantes,
   }
 })
 
