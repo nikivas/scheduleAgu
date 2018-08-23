@@ -162,23 +162,22 @@ export function kursCheckboxClicked(new_value)
         load_grup($('input[name="kurs"]:checked').val());
     }
 }
-/*
-$(document).on('click','.grupCheckbox',function(){
+export function grupChecked(_object)
+{
     var choosen_groups = localStorage.getItem('choosen_groups')!=null ?
-     jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
-     if($(this).prop('checked'))
-     {
-        choosen_groups.push($(this).attr('value'));
-        localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-     }
-     else
-     {
-        var index = choosen_groups.indexOf($(this).attr('value'));
-        choosen_groups.splice(index,1);
-        localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
-     }
-    
-});*/
+    jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
+    if(_object.prop('checked'))
+    {
+      choosen_groups.push(_object.attr('value'));
+      localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
+    }
+    else
+    {
+      var index = choosen_groups.indexOf(_object.attr('value'));
+      choosen_groups.splice(index,1);
+      localStorage.setItem('choosen_groups',JSON.stringify(choosen_groups));
+    }
+}
 export function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
   $('#spinnerFaculty').removeClass('invisible');
   $('#spinnerFaculty').addClass('visible');
@@ -207,36 +206,59 @@ export function load_grup(kurs) { //загрузка группы, по умол
       var count_added=0;
       var choosen_groups = localStorage.getItem('choosen_groups')!=null?
       jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
-      for(var i=0;i<grupie.length;i++)
+      var filtered_groups = grupie.filter(function(item){
+        return item.KURS==kurs && item.SHIFR_SPEC_NEW == spliter[0]
+      });
+      for(var i=0;i<filtered_groups.length;i++)
       {
-        if(grupie[i].KURS == kurs && grupie[i].SHIFR_SPEC_NEW == spliter[0])
+        var appended_result ;
+        if(choosen_groups.includes(filtered_groups[i].GRUP)==true)
         {
-          var appended_result ;
-          if(choosen_groups.includes(grupie[i].GRUP)==true)
-          {
-            appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
-            "' name='grupovuha' checked class='grupCheckbox form-radio animated bounceIn' />"
-                               + grupie[i].GRUP;
-          }
-          else
-          {
-              appended_result = "<input type='checkbox' value='"+grupie[i].GRUP+ 
-            "' name='grupovuha' class='grupCheckbox form-radio animated bounceIn' />"
-                               + grupie[i].GRUP;
-          }
-          $("#groups").append(appended_result);
-          count_added++;
-          if(count_added%3==0){$("#groups").append("<br>");}
+          appended_result = "<input type='checkbox' value='"+filtered_groups[i].GRUP+ 
+          "' name='grupovuha' checked class='grupCheckbox form-radio animated bounceIn' />"
+                             + filtered_groups[i].GRUP;
         }
+        else
+        {
+            appended_result = "<input type='checkbox' value='"+filtered_groups[i].GRUP+ 
+          "' name='grupovuha' class='grupCheckbox form-radio animated bounceIn' />"
+                             + filtered_groups[i].GRUP;
+        }
+        $("#groups").append(appended_result);
+        count_added++;
+        if(count_added%3==0){$("#groups").append("<br>");}
       }
       $('#spinnerFaculty').addClass('invisible');
+      if(filtered_groups.length==0)
+      {
+        setTimeout(function()
+        {
+          $("#studentButton1").addClass("animated fadeOut");
+        },
+        500);
+        $("#studentButton1").addClass("hidden");
+      }
+      else
+      {
+         $("#studentButton1").removeClass("animated fadeOut");
+        $("#studentButton1").removeClass("hidden");
+          setTimeout(function()
+            {
 
+              $("#studentButton1").addClass("animated bounceIn");
+            },
+          100);
+      }
+      $(".grupCheckbox").on('click',function(){
+          var _object = $(this);
+          grupChecked(_object);
+      });
   }
 }
  
 
 /*показ расписание общее, и отдельно по расписанию, блочное расписание*/
-$(document).on('click','.block_first',function() {
+$(".block_first").on('click','.block_first',function() {
 	var str = $(this).attr('id');
 	str = str.substring(str.lastIndexOf("_")+1, str.length);
 	visibility_block('block_first_'+str,'block_second_'+str,'full_schedule_'+str);
@@ -277,206 +299,3 @@ export function visibility_block(oneBlock, twoBlock, threeBlock) {
 	$("#"+twoBlock+'_div').addClass('hide_schedule');
 	$("#"+threeBlock+'_div').addClass('hide_schedule');
 }	
-
-$(document).on('click','#studentButton1',function() 
-{
-  ajaxStudent();
-  return false;
-});
-export function ajaxStudent()
-{
-  try
-  {
-    $("#studentButton1").prop("disabled",true);
-    $("#message_info").text('Загрузка расписания');
-    $("#spinnerFaculty").removeClass("invisible");
-    $("#spinnerFaculty").addClass("visible");
-    $("#schedule").empty();
-    var grupovuha = $("input[name='grupovuha']");
-    var checked_grupovuha =  $("input[name='grupovuha']:checked");
-    if(grupovuha.length!=0)
-    {
-      var connection_state = navigator.connection.type;
-      if(connection_state!=Connection.NONE)
-      {
-          if(checked_grupovuha.length!=0)
-          {
-              checked_grupovuha.each(function(index,element)
-              {
-                var key = this.value;
-                jQuery.ajax({
-                    url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
-                    type:'POST',
-                    crossDomain:true,
-                    async:true,
-                    success: function(data){
-                        var result = jQuery.parseJSON(data);
-                        $("#schedule").append(result);
-                        localStorage.setItem(key,result);
-                    },
-                    complete:function(){ 
-                      if(index==checked_grupovuha.length-1)
-                      {
-                        jQuery.scrollTo("#schedule",1000);
-                        $("#studentButton1").prop('disabled',false);
-                        $("#spinnerFaculty").addClass("invisible");
-                      }
-                 
-                    },
-                    error:function(data) 
-                    {
-                      var result = localStorage.getItem(key);
-                      if(result!=null)
-                      {
-                        $("#schedule").append(result);
-                      }
-                    }
-                });
-              });
-          }
-          else
-          {
-              grupovuha.each(function(index,val){
-                  var key = val.value;
-                  jQuery.ajax({
-                      url:'http://raspisanie.asu.edu.ru/student/schedule/'+key,
-                      type:'POST',
-                      crossDomain:true,
-                      async:true,
-                      success:function(data){
-                        var result = jQuery.parseJSON(data);
-                        $("#schedule").append(result);
-                        localStorage.setItem(key,result);
-                      },
-                      complete:function(){
-                        if(index==grupovuha.length-1)
-                        {
-                          $("#studentButton1").prop('disabled',false);
-                          $("#spinnerFaculty").addClass("invisible");
-                          jQuery.scrollTo("#schedule",1000);
-                        }
-                      },
-                      error:function()
-                      {
-                         var result = localStorage.getItem(key);
-                         if(result!=null){$("#schedule").append(result);}
-                      }
-                  });
-              });
-          }
-      }
-      else
-      {
-          if(checked_grupovuha.length!=0)
-          {
-              checked_grupovuha.each(function () {
-                var key = this.value;
-                var result = localStorage.getItem(key);
-                if(result!=null){$("#schedule").append(result);}
-                else{$("#schedule").append("<p>Соединение с интернетом отсутсвует."+ 
-                  "Локально расписание не сохраненно</p>");}
-              });
-          }
-          else
-          {
-              grupovuha.each(function (key,val) {
-              var key = val.value;
-              var result = localStorage.getItem(key);
-              if(result!=null){$("#schedule").append(result);}
-               else{$("#schedule").append("<p>Локально расписание не сохраненно</p>");}
-
-            });
-          }
-          $("#studentButton1").prop('disabled',false);
-          $("#spinnerFaculty").addClass("invisible");
-          jQuery.scrollTo("#schedule",1000);
-      }
-    }
-    else
-    {
-      $("#schedule").append("<p>Расписание отсутсвует</p>");
-      $("#studentButton1").prop('disabled',false);
-      $("#spinnerFaculty").addClass("invisible");
-      jQuery.scrollTo("#schedule",1000);
-
-    }
-  }
-  catch(ex){
-    $('#spinnerFaculty').addClass('invisible');
-    $("#schedule").html(ex);
-    $("#studentButton1").prop('disabled','false');
-  }
-}
-$(document).on('click','#studentButton2',function(){
-    $("#schedule2").empty();
-    var groupName = $("#grup").val();
-    groupName=groupName.replace('-','');
-    groupName=groupName.trim();
-    groupName=groupName.toUpperCase();
-    if(groupName!='')
-    {
-      findScheduleByGroupName(groupName);
-    }
-    return true;
-});
-export function findScheduleByGroupName (groupName)
-{
-    try
-    {
-        var group = groupName;
-        localStorage.setItem('grup_name',group);
-        $("#studentButton2").prop('disabled',true);
-        $("#spinnerFaculty").removeClass("invisible");
-        $("#spinnerFaculty").addClass("visible");
-        $("#message_info").text('Поиск расписания');
-        if(navigator.connection.type!=Connection.NONE)
-        {
-            jQuery.ajax({
-              url:'http://raspisanie.asu.edu.ru/student/schedule/'+group,
-              type:'POST',
-              success:function(data)
-              {
-                var result = jQuery.parseJSON(data);
-                if(!result.includes('Группа введена неверно'))
-                {
-                  localStorage.setItem(group,result);
-                }
-                $("#schedule2").append(result);
-              },
-              complete:function(){
-                  $("#spinnerFaculty").addClass("invisible");
-                  jQuery.scrollTo("#schedule2",1000);
-                  $("#studentButton2").prop('disabled',false);
-              },
-              error:function(){
-                  var result = localStorage.getItem(group);
-                  if(result!=null){$("#schedule2").append(result);}
-                  else
-                  {
-                    $("#schedule2").append('Расписание не найдено. Отсутствует запись в кэше.');
-                  }
-                  $("#studentButton2").prop('disabled',false);
-              }
-            });
-        }
-        else
-        {
-            var selected_schedule = localStorage.getItem(group);
-            if(selected_schedule!=null)
-            {
-                $("#schedule2").append(selected_schedule);
-            }
-            else
-            {
-                $("#schedule2").append('Отсутствует Соединение с сервером. Отсутствует запись в кэше.');
-            }
-            $("#spinnerFaculty").addClass("invisible");
-            jQuery.scrollTo("#schedule2",1000);
-            $("#studentButton2").prop('disabled',false);
-        }
-    }
-    catch(ex)
-    {
-        $("#schedule2").append(ex);
-    }
-}

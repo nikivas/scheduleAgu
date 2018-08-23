@@ -1,14 +1,14 @@
 <template>
     <q-page expand position="top">
       <q-tabs v-model="tabsModel" align="center" color="dark">
-        <q-tab name="xtab-1" class="fa fa-university" slot="title" label="Факультеты и направления"/>
-        <q-tab name="xtab-2" class="fa fa-users" slot="title" label="Поиск по группе"/>
+        <q-tab name="xtab-1" keep-alive class="fa fa-university" slot="title" label="Факультеты и направления"/>
+        <q-tab name="xtab-2" keep-alive class="fa fa-users" slot="title" label="Поиск по группе"/>
         <!--Блок поиск по факультетам-->
         <q-tab-pane class="text-center" name="xtab-1" keep-alive>
           <span>Факультет</span><br/>
-          <select class="select-style animated fadeInLeft"  v-on:change="faculChanged" id = "facul" name="Faculty"></select><br/><br/>
+          <select class="select-style animated bounceInUp"  v-on:change="faculChanged" id = "facul" name="Faculty"></select><br/><br/>
           <span>Специальность</span><br/>
-          <select class="select-style animated fadeInRight" id = "spec"
+          <select class="select-style animated bounceInDown" id = "spec"
            v-on:change="specChanged($event)" name="specaility"></select><br/><br/>
           <span>Курс : </span>
           <div id="kurs" class="animated pulse">
@@ -17,7 +17,7 @@
             <div id="groups"></div>
           </p>
           <br/>
-          <q-btn class="studentButton"  id="studentButton1" color="positive"  label="Показать"/><br/><br/>
+          <q-btn class="studentButton" v-on:click="ajaxStudent"  id="studentButton1" color="positive"  label="Показать"/><br/><br/>
           <div id="schedule">
           </div>
         </q-tab-pane>
@@ -27,7 +27,7 @@
         <q-tab-pane class="text-center" name="xtab-2" keep-alive>
             <span>Группа :</span><br/>
            <input type="text" name="grupa" class="txtInput animated pulse"  id="grup" v-model="cocksucker" placeholder="Например рт31" /><br/><br/>
-           <q-btn color="amber" class="text-black studentButton" label="Узнать" 
+           <q-btn color="amber" v-on:click="findByGroupNameClicked" class="text-black studentButton" label="Узнать" 
            id="studentButton2"/><br/><br/>
            <div id="schedule2" keep-alive>
              <div v-for="mamka_admina in mamkin"><div v-html="mamka_admina"></div></div>
@@ -99,13 +99,16 @@ export default
           }
       }
     },
-    ...mapActions(
-        {
-          faculChanged: 'estudiantes/faculChanged',
-          specChanged : 'estudiantes/specChanged',
-          kursCheckboxClicked:"estudiantes/kursCheckboxClicked"
-        }
-      ),
+    ...mapActions({
+        faculChanged: 'estudiantes/faculChanged',
+        specChanged : 'estudiantes/specChanged',
+        kursCheckboxClicked:"estudiantes/kursCheckboxClicked",
+    }),
+    ...mapMutations(
+    {
+        ajaxStudent:'estudiantes/ajaxStudent',
+        findByGroupNameClicked : 'estudiantes/findByGroupNameClicked'
+    }),
   },
 }
 </script>
