@@ -121,7 +121,5 @@ export function load_aud(korpus)
 }
 export function audChanged()
 {
-	console.log('aud changed');
-	console.log('aud val '+$("#aud").val());
 	localStorage.setItem('choosen_aud',$("#aud").val());
 }

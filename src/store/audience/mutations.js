@@ -56,7 +56,6 @@ export function findScheduleByAud()
 }
 export function preloadAddedFunction()
 {
-	console.log('we are here');
 	if(localStorage.getItem('choosen_aud'))
 	{
 		$("#schedule").empty();
