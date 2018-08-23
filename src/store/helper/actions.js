@@ -1,8 +1,9 @@
 import { Dialog } from 'quasar'
 
-$(document).on('click','#load_changes',function(){
+export function load_change()
+{
 	update();
-});
+}
 export function update () {
 	if(navigator.connection.type!=Connection.NONE)
 	{

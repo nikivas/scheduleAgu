@@ -5,7 +5,7 @@
 			ее вручную с сервера, нажав на кнопку "Обновить"
 		</p>
 		<br>
-		<div class="text-center"> <q-btn color="primary" id="load_changes" label="Обновить" /> </div>
+		<div class="text-center"> <q-btn color="primary" v-on:click="load_change" label="Обновить" /> </div>
 		<q-inner-loading id="fidgetSpinner"  class="hidden" :visible="true">
 			<div class="fixed fixed-center text-center">
 			<q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
@@ -25,7 +25,7 @@
       methods:
       {
       	...mapActions({
-      		
+      		load_change : 'helper/load_change'
       	})
       }
     }
