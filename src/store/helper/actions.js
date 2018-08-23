@@ -23,14 +23,15 @@ export function update () {
   			});
 	}
 }
-export function load_faculty()
+export async function load_faculty()
 {
+	var result;
 	$.ajax({
 		url:'http://raspisanie.asu.edu.ru/student/faculty',
 		type:'POST',
 		crossDomain:true,
 		success:function(data){
-			var result = JSON.parse(data);
+			result = JSON.parse(data);
 			if(result!=null)
 			{
 				localStorage.setItem('faculties',data);
@@ -38,8 +39,12 @@ export function load_faculty()
 		},
 		error:function (data) {
 
+		},
+		complete:function(){
+
 		}
 	});
+	return result;
 }
 export function load_spec () {
 	$.ajax({

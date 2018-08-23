@@ -8,8 +8,6 @@ export function current_group()
    $("#grup").val(grupa);  
 }
 export function load_faculty() { /*загрузка факультетов*/
-  $(document).ready(function()
-  {
     if(!localStorage.getItem('faculties'))
     {
 
@@ -60,7 +58,6 @@ export function load_faculty() { /*загрузка факультетов*/
         $('#spinnerFaculty').addClass('invisible');
         load_specialty($('#facul').val());
     }
-  });
 }
 
 export function load_specialty(id_spec) {   //специальностей, по выбранному факультету

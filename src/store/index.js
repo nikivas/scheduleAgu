@@ -5,6 +5,7 @@ import estudiantes from './estudiantes'
 import audience from './audience'
 import teacher from './teacher'
 import helper from './helper'
+import mywaves from './mywaves'
 import VueResource from 'vue-resource'
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
     estudiantes,
     audience,
     teacher,
-    helper
+    helper,
+    mywaves
   }
 })
 
