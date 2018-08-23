@@ -65,7 +65,6 @@ export function load_faculty() { /*загрузка факультетов*/
 
 export function load_specialty(id_spec) {   //специальностей, по выбранному факультету
   //При первом запуске
-  console.log(id_spec);
   if(!localStorage.getItem('all_specialities'))//Подгружены ли все специальности
   {
       $('#spinnerFaculty').removeClass('invisible');
@@ -132,12 +131,16 @@ export function preloaded_kurses()
   var str = "";
   for (var i = 1; i < 7; i++) 
   {
-    str += "<input class='kursCheckbox form-radio'  type='radio' name='kurs' value='"+i+"'>"
+    str += "<input class='kursCheckbox form-radio' type='radio' name='kurs' value='"+i+"'>"
     +i+"&nbsp;&nbsp;&nbsp;" ;
     if(i%3==0 && $(document).width()<=400){str+="<br/>";}
   }
   $("#kurs").append(str);
   $("input:radio[name='kurs'][value='"+localStorage.getItem('choosen_kurs')+"']").prop('checked', true);
+  $(".kursCheckbox").on('click',function(event){
+    var new_value = $(this).attr("value");
+    kursCheckboxClicked(new_value);
+  });
 }
 
 export function faculChanged()
@@ -145,20 +148,21 @@ export function faculChanged()
 	localStorage.setItem('faculty_choosen',$("#facul").val());
 	load_specialty($("#facul").val());
 }
-/*$(document).on('change','#spec',function() {  //событие на изменение специальности
-  localStorage.setItem('choosen_speciality_item',$(this).val());
+export function specChanged(){
+  localStorage.setItem('choosen_speciality_item',$("#spec").val());
   load_grup($('input[name="kurs"]:checked').val());
   localStorage.removeItem('choosen_groups');
-});
-
-$(document).on('click','.kursCheckbox',function() { 
-    if($(this).attr('value')!=localStorage.getItem('choosen_kurs'))
+}
+export function kursCheckboxClicked(new_value)
+{
+    if(new_value!=localStorage.getItem('choosen_kurs'))
     {
         localStorage.setItem('choosen_kurs',$('input[name="kurs"]:checked').val());
         localStorage.removeItem('choosen_groups');
         load_grup($('input[name="kurs"]:checked').val());
     }
-});
+}
+/*
 $(document).on('click','.grupCheckbox',function(){
     var choosen_groups = localStorage.getItem('choosen_groups')!=null ?
      jQuery.parseJSON(localStorage.getItem('choosen_groups')) : [];
@@ -176,7 +180,6 @@ $(document).on('click','.grupCheckbox',function(){
     
 });*/
 export function load_grup(kurs) { //загрузка группы, по умолчанию hidden, если грпп несколько, то видны для пользователя
-  console.log('курс ' +kurs);
   $('#spinnerFaculty').removeClass('invisible');
   $('#spinnerFaculty').addClass('visible');
   $("#message_info").text('Загрузка курсов');

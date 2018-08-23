@@ -103,6 +103,7 @@ export default
         {
           faculChanged: 'estudiantes/faculChanged',
           specChanged : 'estudiantes/specChanged',
+          kursCheckboxClicked:"estudiantes/kursCheckboxClicked"
         }
       ),
   },
