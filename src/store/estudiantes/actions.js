@@ -258,21 +258,21 @@ export function load_grup(kurs) { //загрузка группы, по умол
  
 
 /*показ расписание общее, и отдельно по расписанию, блочное расписание*/
-$(".block_first").on('click','.block_first',function() {
+$(".block_first").on('click',function() {
 	var str = $(this).attr('id');
 	str = str.substring(str.lastIndexOf("_")+1, str.length);
 	visibility_block('block_first_'+str,'block_second_'+str,'full_schedule_'+str);
 	visibility_date('oneDate','twoDate');
 	$('#date_learning').addClass('hide_schedule');
 });
-$(document).on('click','.block_second',function() {
+$('.block_second').on('click',function() {
 	var str = $(this).attr('id');
 	var str = str.substring(str.lastIndexOf("_")+1, str.length);
 	visibility_block('block_second_'+str,'block_first_'+str,'full_schedule_'+str);
 	visibility_date('twoDate','oneDate');
 	$('#date_learning').addClass('hide_schedule');
 });
-$(document).on('click','.full_schedule',function() {
+$('.full_schedule').on('click',function() {
 	var str = $(this).attr('id');
 	var str = str.substring(str.lastIndexOf("_")+1, str.length);
 	visibility_block('full_schedule_'+str,'block_first_'+str,'block_second_'+str);
@@ -281,7 +281,7 @@ $(document).on('click','.full_schedule',function() {
 	$('#date_learning').removeClass('hide_schedule');
 });
 	
-function visibility_date(oneDate, twoDate) {
+export function visibility_date(oneDate, twoDate) {
 	$("#"+twoDate).removeClass('view_schedule');
 	$("#"+oneDate).removeClass('hide_schedule');
 	$("#"+oneDate).addClass('view_schedule');
