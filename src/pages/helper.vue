@@ -16,11 +16,17 @@
 </template>
 
 <script>
-    import * as module from'../js/helper.js'
+	import {mapActions} from 'vuex'
     export default{
       mounted()
       {
         
+      },
+      methods:
+      {
+      	...mapActions({
+      		
+      	})
       }
     }
 </script>

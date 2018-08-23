@@ -59,7 +59,7 @@ function load_grups ()
       success: function(data)
       {
       	var result = JSON.parse(data);
-      	if(result!=null)
+      	if(result!=null && result.length!=0)
       	{
         	localStorage.setItem('all_groupies',data);
     	}
