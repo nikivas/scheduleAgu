@@ -7,7 +7,7 @@
       <select class="select-style" v-on:change="korpusChanged" id="korpus" name="housing">
       </select><br/><br/>
      
-      <span>Аудитория</span>
+      <span>Аудитория</span><br>
       <select class="select-style" v-on:change="audChanged" id="aud" name="audience"></select>
       <br /><br/>
      

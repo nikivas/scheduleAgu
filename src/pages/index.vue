@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <div class="text-center">
-      <img src="../statics/logo_agu.png" id="logo_agu"><br/>
+      <img src="../statics/logo_agu.png" class="animated zoomIn" id="logo_agu"><br/>
       <p class="text-center q-caption">
         Адрес : г.Астрахань, ул.Татищева 20А <br>
         Телефон : +7(8512)61-06-75 <br>

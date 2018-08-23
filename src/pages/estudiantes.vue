@@ -11,7 +11,7 @@
           <select class="select-style animated bounceInDown" id = "spec"
            v-on:change="specChanged($event)" name="specaility"></select><br/><br/>
           <span>Курс : </span>
-          <div id="kurs" class="animated pulse">
+          <div id="kurs" class="animated flash">
           </div><br/>
           <p>Группы</p>
             <div id="groups"></div>

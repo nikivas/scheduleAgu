@@ -14,6 +14,12 @@
 			<br/>
 			<q-btn class="button" @click="setInvisible()" id="search_teacher" color="red" label="Принять"/>
 		</div>
+		<q-inner-loading id="spinnerDzyuba":visible="true" class="hidden">
+		<div class="fixed fixed-center text-center">
+		<q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
+		<p id="message_info" class="text-black" style="font-weight: bold;">Подождите,идет загрузка данных</p>
+		</div>
+		</q-inner-loading>
 	</q-page>
 </template>
 

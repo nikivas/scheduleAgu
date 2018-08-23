@@ -23,7 +23,7 @@ export function update () {
   			});
 	}
 }
-export async function load_faculty()
+export function load_faculty()
 {
 	var result;
 	$.ajax({
