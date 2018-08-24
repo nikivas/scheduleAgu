@@ -1,18 +1,19 @@
 <template>
 	<q-page expand position="top">
-		<div class="text-center" >
+		<div class="text-center" id="settings_block" >
 			<span>Факультет</span><br/>
-			<select class="select-style animated bounceInDown" id = "facul" name="Faculty"></select><br/><br/>
+			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated bounceInDown" id = "facul" name="Faculty">
+			</select><br/><br/>
 			<span>Специальность</span><br/>
-			<select class="select-style animated bounceInUp" id = "spec" name="specaility"></select><br/><br/>
+			<select v-on:change="spec_changed" class="select-style animated bounceInUp" id = "spec" name="specaility"></select><br/><br/>
 			<span>Курс : </span>
-			<div id="kurs" class="animated pulse">
+			<div id="kurs" class="animated zoomInLeft">
 			</div><br/>
-			<p>Группы</p>
+			<span>Группы</span><br/>
 			<div id="groups"></div>
 			</p>
 			<br/>
-			<q-btn class="button" @click="setInvisible()" id="search_teacher" color="red" label="Принять"/>
+			<q-btn class="button" @click="acceptar" id="search_teacher" color="red" label="Принять"/>
 		</div>
 		<q-inner-loading id="spinnerDzyuba":visible="true" class="hidden">
 		<div class="fixed fixed-center text-center">
@@ -25,8 +26,7 @@
 
 <script>
 	import axios from 'axios';
-	import { Notify } from 'quasar';
-	import {mapActions} from 'vuex'
+	import {mapActions,mapMutations} from 'vuex'
 	export default
 	{
 		data()
@@ -37,8 +37,8 @@
 		},
 		mounted()
 		{
-			
 			this.load_faculties();
+			this.preloaded_kurses();
 		},
 		created()
 		{
@@ -51,7 +51,13 @@
 				this.show_settings = false;
 			},
 			...mapActions({
-				load_faculties : 'mywaves/load_faculties'
+				load_faculties : 'mywaves/load_faculties',
+				load_speacilaty : 'mywaves/load_speacilaty',
+				preloaded_kurses : 'mywaves/preloaded_kurses',
+				spec_changed : 'mywaves/spec_changed'
+			}),
+			...mapMutations({
+				acceptar : 'mywaves/acceptar'
 			})
 
 		}

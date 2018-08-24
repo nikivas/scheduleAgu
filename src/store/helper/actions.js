@@ -32,7 +32,7 @@ export function load_faculty()
 		crossDomain:true,
 		success:function(data){
 			result = JSON.parse(data);
-			if(result!=null)
+			if(result!=null && result.length!=0)
 			{
 				localStorage.setItem('faculties',data);
 			}
@@ -52,7 +52,7 @@ export function load_spec () {
 		 type:'POST',
 		 success:function (data) {
 		 	var result = JSON.parse(data);
-		 	if(result!=null)
+		 	if(result!=null && result.length!=0)
 			{
 				localStorage.setItem('all_specialities',data);
 			}
@@ -91,7 +91,7 @@ export function load_teachers()
 		success:function(data)
 		{
 			var birds = JSON.parse(data);
-			if(birds!=null)
+			if(birds!=null && birds.length!=0)
 			{
 				localStorage.setItem('birds',data);
 			}
@@ -106,7 +106,7 @@ export function load_korpus()
 		success:function(data)
 		{
 			var korpuses = jQuery.parseJSON(data);
-			if(korpuses!=null)
+			if(korpuses!=null && korpuses.length!=0)
 			{
 				localStorage.setItem('korpuses',data);
 			}
@@ -120,7 +120,7 @@ export function load_audi()
   		type:'POST',
   		success:function(data){
   			var result = jQuery.parseJSON(data);
-  			if(result!=null){localStorage.setItem('all_aud', data);}
+  			if(result!=null && result.length!=0){localStorage.setItem('all_aud', data);}
   		},
   		complete:function()
   		{

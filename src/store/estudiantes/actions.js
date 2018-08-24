@@ -8,9 +8,8 @@ export function current_group()
    $("#grup").val(grupa);  
 }
 export function load_faculty() { /*загрузка факультетов*/
-    if(!localStorage.getItem('faculties'))
+    if(!localStorage.getItem('faculties') || localStorage.getItem('faculties')=='')
     {
-
         jQuery.ajax({
           url: 'http://raspisanie.asu.edu.ru/student/faculty',
           type: 'POST',
@@ -62,7 +61,7 @@ export function load_faculty() { /*загрузка факультетов*/
 
 export function load_specialty(id_spec) {   //специальностей, по выбранному факультету
   //При первом запуске
-  if(!localStorage.getItem('all_specialities'))//Подгружены ли все специальности
+  if(!localStorage.getItem('all_specialities') || localStorage.getItem('all_specialities')=='')//Подгружены ли все специальности
   {
       $('#spinnerFaculty').removeClass('invisible');
       $('#spinnerFaculty').addClass('visible');
@@ -179,7 +178,7 @@ export function load_grup(kurs) { //загрузка группы, по умол
   $('#spinnerFaculty').removeClass('invisible');
   $('#spinnerFaculty').addClass('visible');
   $("#message_info").text('Загрузка курсов');
-  if(!localStorage.getItem('all_groupies'))
+  if(!localStorage.getItem('all_groupies') || localStorage.getItem('all_groupies')=='')
   {
     var val_spec = $("#spec").val();
     jQuery.ajax({
