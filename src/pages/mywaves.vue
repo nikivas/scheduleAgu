@@ -1,6 +1,7 @@
 <template>
 	<q-page expand position="top">
-		<div class="text-center" id="settings_block" >
+		<div class="text-center" v-bind:class="{hidden:checkVisibility==false}"
+		 id="settings_block" >
 			<span>Факультет</span><br/>
 			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated bounceInDown" id = "facul" name="Faculty">
 			</select><br/><br/>
@@ -15,6 +16,17 @@
 			<br/>
 			<q-btn class="button" @click="acceptar" id="search_teacher" color="red" label="Принять"/>
 		</div>
+
+		<div class="text-center" id="meine_groups" 
+		v-bind:class="{hidden:checkVisibility==true}">
+		<div id="meine_liben_groups"></div>
+			<ul id="list_buttons">
+			<li><q-btn class="button" size="sm"  color="secondary" label="Найти"/></li>
+			<li><q-btn class="button" size="sm"  color="tertiary" label="Изменить группы"/>
+			</li>
+			</ul>
+		</div>
+
 		<q-inner-loading id="spinnerDzyuba":visible="true" class="hidden">
 		<div class="fixed fixed-center text-center">
 		<q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
@@ -39,6 +51,7 @@
 		{
 			this.load_faculties();
 			this.preloaded_kurses();
+			this.preloadMeineKurses();
 		},
 		created()
 		{
@@ -46,10 +59,6 @@
 		},
 		methods:
 		{
-			setInvisible()
-			{
-				this.show_settings = false;
-			},
 			...mapActions({
 				load_faculties : 'mywaves/load_faculties',
 				load_speacilaty : 'mywaves/load_speacilaty',
@@ -57,9 +66,32 @@
 				spec_changed : 'mywaves/spec_changed'
 			}),
 			...mapMutations({
-				acceptar : 'mywaves/acceptar'
-			})
-
+				acceptar : 'mywaves/acceptar',
+				preloadMeineKurses : 'mywaves/preloadMeineKurses'
+			}),
+		},
+		computed:{
+			checkVisibility(){
+				var meine_groups= localStorage.getItem('meine_liben_groups');
+				if(!meine_groups && meine_groups.length!=0)
+				{
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
 		}
 	}
 </script>
+
+<style>
+#list_buttons
+{
+	list-style:none;
+}
+#list_buttons li{
+	display:inline;
+	padding-left:1em;
+}
+</style>
