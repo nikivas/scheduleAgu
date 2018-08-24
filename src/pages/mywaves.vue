@@ -11,8 +11,6 @@
 			</div><br/>
 			<span>Группы</span><br/>
 			<div id="groups"></div>
-			</p>
-			<br/>
 			<ul class="list_buttons">
 				<li><q-btn class="button" @click="acceptar" 
 				id="search_teacher" color="red" label="Принять"/>
@@ -27,12 +25,13 @@
 			<div>Ваша группа</div>
 		<div id="meine_liben_groups"></div>
 			<ul class="list_buttons">
-			<li><q-btn class="button" size="sm"  color="secondary" label="Найти"/></li>
+			<li><q-btn class="button" size="sm" @click="findSchedule" color="secondary"
+			 label="Найти"/></li>
 			<li><q-btn class="button" size="sm" v-on:click="goToSettings"  color="tertiary" label="Изменить группу"/>
 			</li>
 			</ul>
 		</div>
-
+		<div id="schedule"></div>
 		<q-inner-loading id="spinnerDzyuba":visible="true" class="hidden">
 		<div class="fixed fixed-center text-center">
 		<q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
@@ -59,6 +58,7 @@
 			this.load_faculties();
 			this.preloaded_kurses();
 			this.preloadMeineKurses();
+			this.findSchedule();
 		},
 		created()
 		{
@@ -77,7 +77,8 @@
 			}),
 			...mapMutations({
 				acceptar : 'mywaves/acceptar',
-				preloadMeineKurses : 'mywaves/preloadMeineKurses'
+				preloadMeineKurses : 'mywaves/preloadMeineKurses',
+				findSchedule : 'mywaves/findSchedule'
 			}),
 		},
 		computed:{
@@ -89,7 +90,7 @@
 .list_buttons
 {
 	list-style:none;
-	margin-right:1.2em;
+	margin-right:2em;
 }
 .list_buttons li{
 	display:inline;

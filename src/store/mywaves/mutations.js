@@ -2,6 +2,8 @@
 export const someMutation = (state) => {}
  */
 import { Notify } from 'quasar';
+import axios from 'axios';
+import { Dialog } from 'quasar'
 export function acceptar (state) {
 	var checked_grupovuha =  $("input[name='grupovuha']:checked");
 	if(checked_grupovuha.length<=0)
@@ -28,7 +30,7 @@ export function acceptar (state) {
 		preloadMeineKurses(state);
 		Notify.create({
 			type:'positive',
-			message: 'Группы выбраны успешно',
+			message: 'Группа выбрана успешно',
 			position : 'bottom'
 		});
 	}
@@ -53,3 +55,46 @@ export function preloadMeineKurses(state){
 	}
 }
 
+export function findSchedule()
+{
+	try {
+		$("#schedule").empty();
+		var checked_grupovuha =  $("input[name='liebenGroups']:checked");
+		$("#spinnerDzyuba").removeClass("hidden")
+		if(navigator.connection.type!=Connection.NONE)
+		{	
+			axios.get('http://raspisanie.asu.edu.ru/student/schedule/'+checked_grupovuha[0].value)
+			.then((response)=>{
+				$("#schedule").append(response.data);
+				localStorage.setItem(checked_grupovuha[0].value, JSON.stringify(response.data));
+				$("#spinnerDzyuba").addClass("hidden");
+				//jQuery.scrollTo("#schedule",1000);
+				Notify.create({
+					type:'positive',
+					message: 'Расписание загруженно успешно',
+					position : 'bottom'
+				});
+			}).catch((err)=>{
+				Dialog.create({
+					title:'Ошибка!',
+  					message:err
+				});
+			});
+		}
+		else
+		{
+			var schedule = localStorage.getItem(checked_grupovuha[0].value);
+			if(schedule!=null)
+			{
+				$("#schedule").append(schedule);
+			}
+			else
+			{
+				$("#schedule").append("<p class='text-center'>Расписание отсутствует. Проверьте интернет соединение</p>");
+			}
+			$("#spinnerDzyuba").addClass("hidden");
+		}
+	} catch(e) {
+		
+	}
+}

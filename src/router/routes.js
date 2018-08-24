@@ -4,7 +4,7 @@ export default [
     path: '/',
     component: () => import('layouts/default'),
     children: [
-      { path: '', component: () => import('pages/estudiantes') },
+      { path: '', component: () => import('pages/mywaves') },
       { path: '/estudiantes', component: () => import('pages/estudiantes') },
       { path:'/teachers',component:()=> import('pages/teachers')},
       { path: '/audiences', component:() => import('pages/audiences')},
