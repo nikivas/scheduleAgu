@@ -25,6 +25,7 @@ export function acceptar (state) {
 			$("#settings_block").addClass("hidden");
 			$("#meine_groups").removeClass("hidden");
 		},1000);
+		preloadMeineKurses(state);
 		Notify.create({
 			type:'positive',
 			message: 'Группы выбраны успешно',
@@ -36,6 +37,7 @@ export function acceptar (state) {
 
 export function preloadMeineKurses(state){
 	var meine_liben_groups = JSON.parse(localStorage.getItem('meine_liben_groups'));
+	$("#meine_liben_groups").empty();
 	meine_liben_groups.forEach( function(element, index) {
 		var appended_result ;
 		var count_added=0;

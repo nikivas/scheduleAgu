@@ -1,7 +1,6 @@
 <template>
 	<q-page expand position="top">
-		<div class="text-center" v-bind:class="{hidden:show_settings==true}"
-		 id="settings_block" >
+		<div class="text-center" id="settings_block" >
 			<span>Факультет</span><br/>
 			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated bounceInDown" id = "facul" name="Faculty">
 			</select><br/><br/>
@@ -19,17 +18,17 @@
 				id="search_teacher" color="red" label="Принять"/>
 			</li>
 			<li>
-				<q-btn class="button" @click="this.getBack" color="dark" label="Назад"/>
+				<q-btn class="button" @click="returnToGroups" color="dark" label="Назад"/>
 			</li>
 			</ul>
 		</div>
 
-		<div class="text-center" id="meine_groups" 
-		v-bind:class="{hidden:show_settings==false}">
+		<div class="text-center" id="meine_groups">
+			<div>Ваши группы</div>
 		<div id="meine_liben_groups"></div>
 			<ul class="list_buttons">
 			<li><q-btn class="button" size="sm"  color="secondary" label="Найти"/></li>
-			<li><q-btn class="button" size="sm" v-on:click="ShowSetting();"  color="tertiary" label="Изменить группы"/>
+			<li><q-btn class="button" size="sm" v-on:click="goToSettings"  color="tertiary" label="Изменить группы"/>
 			</li>
 			</ul>
 		</div>
@@ -51,11 +50,12 @@
 		data()
 		{
 			return{
-				show_settings:true
+
 			}
 		},
 		mounted()
 		{
+			this.checkVisibilty();
 			this.load_faculties();
 			this.preloaded_kurses();
 			this.preloadMeineKurses();
@@ -70,20 +70,15 @@
 				load_faculties : 'mywaves/load_faculties',
 				load_speacilaty : 'mywaves/load_speacilaty',
 				preloaded_kurses : 'mywaves/preloaded_kurses',
-				spec_changed : 'mywaves/spec_changed'
+				spec_changed : 'mywaves/spec_changed',
+				checkVisibilty : 'mywaves/checkVisibilty',
+				goToSettings : 'mywaves/goToSettings',
+				returnToGroups: 'mywaves/returnToGroups'
 			}),
 			...mapMutations({
 				acceptar : 'mywaves/acceptar',
 				preloadMeineKurses : 'mywaves/preloadMeineKurses'
 			}),
-			ShowSetting()
-			{
-				this.show_settings = false;
-			},
-			getBack()
-			{
-				this.show_settings=true;
-			}
 		},
 		computed:{
 		}

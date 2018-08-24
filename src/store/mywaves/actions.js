@@ -82,3 +82,24 @@ export function kursChecked(state)
 {
 	spec_changed(state);
 }
+export function checkVisibilty(){
+	if(localStorage.getItem('meine_liben_groups') || localStorage.getItem('meine_liben_groups').length==0)
+	{
+		$("#settings_block").addClass("hidden");
+	}
+	else
+	{
+		$("#settings_block").removeClass("hidden");
+		$("#meine_groups").addClass("hidden");
+	}
+}
+export function goToSettings(){
+	$("#settings_block").removeClass("hidden");
+	$("#meine_groups").addClass("hidden");
+	$("#settings_block").removeClass("animated fadeOutLeft");
+
+}
+export function returnToGroups(){
+	$("#settings_block").addClass("hidden");
+	$("#meine_groups").removeClass("hidden");
+}
