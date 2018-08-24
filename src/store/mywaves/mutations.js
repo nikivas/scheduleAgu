@@ -23,6 +23,7 @@ export function acceptar (state) {
 		$("#settings_block").addClass("animated fadeOutLeft");
 		setTimeout(()=>{
 			$("#settings_block").addClass("hidden");
+			$("#meine_groups").removeClass("hidden");
 		},1000);
 		Notify.create({
 			type:'positive',
@@ -30,6 +31,7 @@ export function acceptar (state) {
 			position : 'bottom'
 		});
 	}
+	return true;
 }
 
 export function preloadMeineKurses(state){
@@ -45,3 +47,4 @@ export function preloadMeineKurses(state){
     	if(count_added%3==0){$("#meine_liben_groups").append("<br>");}
 	});	
 }
+

@@ -1,6 +1,6 @@
 <template>
 	<q-page expand position="top">
-		<div class="text-center" v-bind:class="{hidden:checkVisibility==false}"
+		<div class="text-center" v-bind:class="{hidden:show_settings==true}"
 		 id="settings_block" >
 			<span>Факультет</span><br/>
 			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated bounceInDown" id = "facul" name="Faculty">
@@ -14,15 +14,22 @@
 			<div id="groups"></div>
 			</p>
 			<br/>
-			<q-btn class="button" @click="acceptar" id="search_teacher" color="red" label="Принять"/>
+			<ul class="list_buttons">
+				<li><q-btn class="button" @click="acceptar" 
+				id="search_teacher" color="red" label="Принять"/>
+			</li>
+			<li>
+				<q-btn class="button" @click="this.getBack" color="dark" label="Назад"/>
+			</li>
+			</ul>
 		</div>
 
 		<div class="text-center" id="meine_groups" 
-		v-bind:class="{hidden:checkVisibility==true}">
+		v-bind:class="{hidden:show_settings==false}">
 		<div id="meine_liben_groups"></div>
-			<ul id="list_buttons">
+			<ul class="list_buttons">
 			<li><q-btn class="button" size="sm"  color="secondary" label="Найти"/></li>
-			<li><q-btn class="button" size="sm"  color="tertiary" label="Изменить группы"/>
+			<li><q-btn class="button" size="sm" v-on:click="ShowSetting();"  color="tertiary" label="Изменить группы"/>
 			</li>
 			</ul>
 		</div>
@@ -69,29 +76,28 @@
 				acceptar : 'mywaves/acceptar',
 				preloadMeineKurses : 'mywaves/preloadMeineKurses'
 			}),
+			ShowSetting()
+			{
+				this.show_settings = false;
+			},
+			getBack()
+			{
+				this.show_settings=true;
+			}
 		},
 		computed:{
-			checkVisibility(){
-				var meine_groups= localStorage.getItem('meine_liben_groups');
-				if(!meine_groups && meine_groups.length!=0)
-				{
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
 		}
 	}
 </script>
 
 <style>
-#list_buttons
+.list_buttons
 {
 	list-style:none;
+	margin-right:1.2em;
 }
-#list_buttons li{
+.list_buttons li{
 	display:inline;
-	padding-left:1em;
+	padding-left : 0.75em;
 }
 </style>
