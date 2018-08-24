@@ -36,17 +36,20 @@ export function acceptar (state) {
 }
 
 export function preloadMeineKurses(state){
-	var meine_liben_groups = JSON.parse(localStorage.getItem('meine_liben_groups'));
-	$("#meine_liben_groups").empty();
-	meine_liben_groups.forEach( function(element, index) {
-		var appended_result ;
-		var count_added=0;
-		appended_result = "<input type='checkbox' value='"+element+ 
-		"' name='liebenGroups' class='liebenGroupsCheckbox form-radio animated bounceIn' />"
-		+ element;
-		$("#meine_liben_groups").append(appended_result);
-   		count_added++;
-    	if(count_added%3==0){$("#meine_liben_groups").append("<br>");}
-	});	
+	if(localStorage.getItem('meine_liben_groups'))
+	{
+		var meine_liben_groups = JSON.parse(localStorage.getItem('meine_liben_groups'));
+		$("#meine_liben_groups").empty();
+		meine_liben_groups.forEach( function(element, index) {
+			var appended_result ;
+			var count_added=0;
+			appended_result = "<input type='radio' checked='true' value='"+element+ 
+			"' name='liebenGroups' class='liebenGroupsCheckbox form-radio animated bounceIn' />"
+			+ element;
+			$("#meine_liben_groups").append(appended_result);
+	   		count_added++;
+	    	if(count_added%3==0){$("#meine_liben_groups").append("<br>");}
+		});	
+	}
 }
 

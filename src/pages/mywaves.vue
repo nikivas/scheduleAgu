@@ -24,11 +24,11 @@
 		</div>
 
 		<div class="text-center" id="meine_groups">
-			<div>Ваши группы</div>
+			<div>Ваша группа</div>
 		<div id="meine_liben_groups"></div>
 			<ul class="list_buttons">
 			<li><q-btn class="button" size="sm"  color="secondary" label="Найти"/></li>
-			<li><q-btn class="button" size="sm" v-on:click="goToSettings"  color="tertiary" label="Изменить группы"/>
+			<li><q-btn class="button" size="sm" v-on:click="goToSettings"  color="tertiary" label="Изменить группу"/>
 			</li>
 			</ul>
 		</div>

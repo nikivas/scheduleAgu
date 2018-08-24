@@ -52,7 +52,7 @@ export async function load_grup(state,id_spec,kurs){
 		var count_added=0;
 		filtered_groups.forEach( function(element, index) {
 			var appended_result ;
-			appended_result = "<input type='checkbox' value='"+element.GRUP+ 
+			appended_result = "<input type='radio' value='"+element.GRUP+ 
 			"' name='grupovuha' class='grupCheckbox form-radio animated bounceIn' />"
 			+ element.GRUP;
 			$("#groups").append(appended_result);
@@ -83,7 +83,7 @@ export function kursChecked(state)
 	spec_changed(state);
 }
 export function checkVisibilty(){
-	if(localStorage.getItem('meine_liben_groups') || localStorage.getItem('meine_liben_groups').length==0)
+	if(localStorage.getItem('meine_liben_groups') || localStorage.getItem('meine_liben_groups')==0)
 	{
 		$("#settings_block").addClass("hidden");
 	}
