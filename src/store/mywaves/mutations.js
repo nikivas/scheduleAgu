@@ -1,6 +1,3 @@
-/*
-export const someMutation = (state) => {}
- */
 import { Notify } from 'quasar';
 import axios from 'axios';
 import { Dialog } from 'quasar'
@@ -28,11 +25,7 @@ export function acceptar (state) {
 			$("#meine_groups").removeClass("hidden");
 		},1000);
 		preloadMeineKurses(state);
-		Notify.create({
-			type:'positive',
-			message: 'Группа выбрана успешно',
-			position : 'bottom'
-		});
+		findSchedule(state);
 	}
 	return true;
 }
@@ -55,13 +48,13 @@ export function preloadMeineKurses(state){
 	}
 }
 
-export function findSchedule()
+export function findSchedule(state)
 {
 	try {
 		$("#schedule").empty();
 		var checked_grupovuha =  $("input[name='liebenGroups']:checked");
-		$("#spinnerDzyuba").removeClass("hidden")
-		if(navigator.connection.type!=Connection.NONE)
+		$("#spinnerDzyuba").removeClass("hidden");
+		if(navigator.connection.type==Connection.NONE)
 		{	
 			axios.get('http://raspisanie.asu.edu.ru/student/schedule/'+checked_grupovuha[0].value)
 			.then((response)=>{
@@ -77,13 +70,14 @@ export function findSchedule()
 			}).catch((err)=>{
 				Dialog.create({
 					title:'Ошибка!',
-  					message:err
+  					message:err.toString()
 				});
+				$("#spinnerDzyuba").addClass("hidden");
 			});
 		}
 		else
 		{
-			var schedule = localStorage.getItem(checked_grupovuha[0].value);
+			var schedule = localStorage.getItem(checked_grupovuha[0].value.toString());
 			if(schedule!=null)
 			{
 				$("#schedule").append(schedule);

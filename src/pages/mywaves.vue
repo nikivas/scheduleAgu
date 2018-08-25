@@ -1,11 +1,14 @@
 <template>
 	<q-page expand position="top">
-		<div class="text-center" id="settings_block" >
+		<br>
+		<div class="text-center" id="settings_block">
+			<span class="label text-italic text-red">Выберите группу</span><br/><br/>
 			<span>Факультет</span><br/>
-			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated bounceInDown" id = "facul" name="Faculty">
+			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated fadeIn" 
+			id = "facul" name="Faculty">
 			</select><br/><br/>
 			<span>Специальность</span><br/>
-			<select v-on:change="spec_changed" class="select-style animated bounceInUp" id = "spec" name="specaility"></select><br/><br/>
+			<select v-on:change="spec_changed" class="select-style animated fadeIn" id = "spec" name="specaility"></select><br/><br/>
 			<span>Курс : </span>
 			<div id="kurs" class="animated zoomInLeft">
 			</div><br/>
@@ -25,14 +28,14 @@
 			<div>Ваша группа</div>
 		<div id="meine_liben_groups"></div>
 			<ul class="list_buttons">
-			<li><q-btn class="button" size="sm" @click="findSchedule" color="secondary"
+			<li><q-btn class="button" size="md" @click="findSchedule" color="secondary"
 			 label="Найти"/></li>
-			<li><q-btn class="button" size="sm" v-on:click="goToSettings"  color="tertiary" label="Изменить группу"/>
+			<li><q-btn class="button" size="md" v-on:click="goToSettings"  color="tertiary" label="Изменить группу"/>
 			</li>
 			</ul>
+			<div id="schedule"></div>
 		</div>
-		<div id="schedule"></div>
-		<q-inner-loading id="spinnerDzyuba":visible="true" class="hidden">
+		<q-inner-loading id="spinnerDzyuba" :visible="true" class="hidden">
 		<div class="fixed fixed-center text-center">
 		<q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
 		<p id="message_info" class="text-black" style="font-weight: bold;">Подождите,идет загрузка данных</p>

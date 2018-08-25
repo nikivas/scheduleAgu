@@ -68,6 +68,7 @@ export function load_teacher()
 	catch(e) 
 	{
 		$("#schedule").append(e);
+		$("#teacher_spinner").addClass("hidden");
 	}
 }
 export function log( message )

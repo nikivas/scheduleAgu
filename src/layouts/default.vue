@@ -23,7 +23,7 @@
       </q-toolbar>
     </q-layout-header>
 
-    <q-layout-drawer slide="left"
+    <q-layout-drawer :swipe-open="true"  slide="left"
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >

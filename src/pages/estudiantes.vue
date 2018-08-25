@@ -6,9 +6,9 @@
         <!--Блок поиск по факультетам-->
         <q-tab-pane class="text-center" name="xtab-1" keep-alive>
           <span>Факультет</span><br/>
-          <select class="select-style animated zoomInDown"  v-on:change="faculChanged" id = "facul" name="Faculty"></select><br/><br/>
+          <select class="select-style animated zoomIn"  v-on:change="faculChanged" id = "facul" name="Faculty"></select><br/><br/>
           <span>Специальность</span><br/>
-          <select class="select-style animated zoomInUp" id = "spec"
+          <select class="select-style animated zoomIn" id = "spec"
            v-on:change="specChanged($event)" name="specaility"></select><br/><br/>
           <span>Курс : </span>
           <div id="kurs" class="animated flash">
