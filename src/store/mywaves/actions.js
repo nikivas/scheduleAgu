@@ -1,3 +1,4 @@
+import {Notify} from 'quasar'
 export async function load_faculties(state) {
 	$("#spinnerDzyuba").removeClass("hidden");
 	state.getters.getFaculties.then((data) => {
@@ -9,6 +10,12 @@ export async function load_faculties(state) {
 		}
 		$("#spinnerDzyuba").addClass("hidden");
 		load_speacilaty(state, $("#facul").val());
+	}).catch((ex)=>{
+		$("#spinnerDzyuba").addClass("hidden");
+		Notify.create({
+			type:'negative',
+			message:'Проверьте интрнет соединение'
+		});
 	});
 }
 export async function load_speacilaty(state, id_faculty) {

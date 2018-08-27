@@ -2,14 +2,15 @@
 export const someGetter = (state) => {}
  */
 import axios from 'axios'
+const _instanse = axios.create({timeout:10000});
 export  function  getFaculties(state)
 {
 	if(!localStorage.getItem('faculties')||localStorage.getItem('faculties')=='')
 	{
 		return new Promise( function(resolve) {
-			axios.get('http://raspisanie.asu.edu.ru/student/faculty')
+			_instanse.get('http://raspisanie.asu.edu.ru/student/faculty',{timeout:10000})
 			.then( function(json) {
-			localStorage.setItem('faculties', JSON.stringify(json.data))
+			localStorage.setItem('faculties', JSON.stringify(json.data));
 			resolve(json.data);	
 		});
 		});
@@ -24,10 +25,11 @@ export  function  getFaculties(state)
 
 export function getSpecialities(state)
 {
-	if(!localStorage.getItem('all_specialities')||localStorage.getItem('all_specialities').length==0)
+	if(localStorage.getItem('all_specialities')||!localStorage.getItem('all_specialities').length==0)
 	{
 		return new Promise( function(resolve) {
-			axios.get('http://m.raspisanie.asu.edu.ru/student/specialty')
+			console.log('запрос онлайн');
+			_instanse.get('http://m.raspisanie.asu.edu.ru/student/specialty')
 			.then( function(json) {
 			localStorage.setItem('all_specialities', JSON.stringify(json.data))
 			resolve(json.data);	

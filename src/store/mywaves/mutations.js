@@ -65,7 +65,7 @@ export function findSchedule(state) {
 				}).catch((err) => {
 					Dialog.create({
 						title: 'Ошибка!',
-						message: err.toString()
+						message: "Проверьте интернет соединение!"
 					});
 					$("#spinnerDzyuba").addClass("hidden");
 				});
