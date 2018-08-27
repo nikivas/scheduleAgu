@@ -2,7 +2,7 @@
   <q-layout  ref="layout" view="lHh Lpr lFf" >
     <q-layout-header>
       <q-toolbar
-        color="blue-grey"
+        color="blue-grey-10"
         :glossy="$q.theme === 'mat'"
         :inverted="$q.theme === 'ios'"
       >
@@ -11,9 +11,9 @@
           dense
           round
           @click="leftDrawerOpen = !leftDrawerOpen"
-          aria-label="Menu"
+          aria-label="Menu" 
         >
-          <q-icon name="menu"  color="black"/>
+          <q-icon name="menu"  color="white"/>
         </q-btn>
 
         <q-toolbar-title class="text-white">

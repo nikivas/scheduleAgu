@@ -11,6 +11,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "jquery-ui": "^1.12.1",
     "npm": "^6.4.0",
     "to": "^0.2.9",
     "update": "^0.7.4",
