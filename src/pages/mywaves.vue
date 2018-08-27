@@ -30,7 +30,7 @@
 			<ul class="list_buttons">
 			<li><q-btn class="button" size="md" @click="findSchedule" color="secondary"
 			 label="Найти"/></li>
-			<li><q-btn class="button" size="md" v-on:click="goToSettings"  color="tertiary" label="Изменить группу"/>
+			<li><q-btn class="button" size="md" v-on:click="goToSettings"  color="dark" label="Изменить группу"/>
 			</li>
 			</ul>
 			<div id="schedule"></div>

@@ -1,6 +1,6 @@
 <template>
     <q-page expand position="top">
-      <q-tabs v-model="tabsModel" align="center" color="dark">
+      <q-tabs v-model="tabsModel" align="center" color="blue-grey-14">
         <q-tab name="xtab-1" keep-alive class="fa fa-university" slot="title" label="Факультеты и направления"/>
         <q-tab name="xtab-2" keep-alive class="fa fa-users" slot="title" label="Поиск по группе"/>
         <!--Блок поиск по факультетам-->
