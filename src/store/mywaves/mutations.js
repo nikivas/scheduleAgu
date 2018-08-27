@@ -54,7 +54,7 @@ export function findSchedule(state)
 		$("#schedule").empty();
 		var checked_grupovuha =  $("input[name='liebenGroups']:checked");
 		$("#spinnerDzyuba").removeClass("hidden");
-		if(navigator.connection.type==Connection.NONE)
+		if(navigator.connection.type!=Connection.NONE)
 		{	
 			axios.get('http://raspisanie.asu.edu.ru/student/schedule/'+checked_grupovuha[0].value)
 			.then((response)=>{

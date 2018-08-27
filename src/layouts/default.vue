@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf" >
+  <q-layout  ref="layout" view="lHh Lpr lFf" >
     <q-layout-header>
       <q-toolbar
         color="blue-grey"
@@ -23,47 +23,47 @@
       </q-toolbar>
     </q-layout-header>
 
-    <q-layout-drawer :swipe-open="true"  slide="left"
+    <q-layout-drawer :no-swipe-open=false  swipe-only=true slide="left"
       v-model="leftDrawerOpen"
       :content-class="$q.theme === 'mat' ? 'bg-grey-2' : null"
     >
       <q-list
         no-border
         link
-        inset-delimiter
+        inset-separator
       >
-      <q-item to="/mywaves">
+      <q-item to="/mywaves" >
           <q-item-side class="fa fa-book" />
-          <q-item-main label="Мое Расписание" />
+          <q-item-main label="Мое Расписание" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
 
         <q-item to="/estudiantes">
           <q-item-side class="fa fa-users" />
-          <q-item-main label="Студенты" />
+          <q-item-main label="Студенты"  @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
         <q-item to="/teachers" >
           <q-item-side class="fas fa-chalkboard-teacher" />
-          <q-item-main label="Преподаватели" />
+          <q-item-main label="Преподаватели" @click.native="leftDrawerOpen=!leftDrawerOpen" />
         </q-item>
         
         <q-item to="/audiences">
           <q-item-side class="fas fa-building" />
-          <q-item-main label="Аудитории"/>
+          <q-item-main label="Аудитории" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
 
         <q-item to="/ads">
           <q-item-side class="fas fa-exclamation"/>
-          <q-item-main label="Объявления" />
+          <q-item-main label="Объявления" @click.native="leftDrawerOpen=!leftDrawerOpen" />
         </q-item>
 
        <q-item to="/help">
           <q-item-side class="fas fa-question"/>
-          <q-item-main label="Помощь" />
+          <q-item-main label="Помощь" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
 
         <q-item to="/info">
           <q-item-side class="fa fa-info"/>
-          <q-item-main label="Информация"/>
+          <q-item-main label="Информация" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
       
       </q-list>
@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     openURL
-  }
+  },
 }
 </script>
 

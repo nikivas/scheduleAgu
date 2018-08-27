@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page expand position="top">
     <br>
     <div class="text-center">
       <p>ФИО преподавателя</p>
@@ -8,13 +8,13 @@
       <input type="text" name="teacher" id="log" hidden="" ><br/>
       <q-btn class="button" v-on:click="findTeacherClicked" id="search_teacher" color="secondary" label="Показать"/>
       <div id="schedule"></div>
-      <q-inner-loading id="teacher_spinner" class="hidden" :visible="true">
-        <div class="fixed fixed-center text-center">
-        <q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
-        <p style="color:black;font-weight: bold;">Подождите,идет загрузка данных</p>
-        </div>
-      </q-inner-loading>
     </div>
+    <q-inner-loading id="teacher_spinner" class="hidden" :visible="true">
+      <div class="fixed fixed-center text-center">
+      <q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
+      <p style="color:black;font-weight: bold;">Подождите,идет загрузка данных</p>
+      </div>
+    </q-inner-loading>
   </q-page>
 </template>
 
@@ -26,6 +26,7 @@
       {
         this.load_teacher();
         this.getMyLibenTeacher();
+        this.findTeacherClicked();
       },
       methods:
       {

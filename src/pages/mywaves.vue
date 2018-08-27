@@ -52,7 +52,6 @@
 		data()
 		{
 			return{
-
 			}
 		},
 		mounted()
