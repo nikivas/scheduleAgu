@@ -73,6 +73,7 @@ export function findSchedule(state) {
 					if(schedule_local!=null)
 					{
 						$("#schedule").append(schedule_local);
+						$(".paud").addClass("invise");
 					}
 					else
 					{

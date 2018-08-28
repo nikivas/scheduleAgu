@@ -1,7 +1,7 @@
 import {Notify} from 'quasar'
 
 export async function load_faculties(state) {
-	$("#spinnerDzyuba").removeClass("hidden");
+	//$("#spinnerDzyuba").removeClass("hidden");
 	state.getters.getFaculties.then((data) => {
 		for (var i = 0; i < data.length; i++) {
 			$("#facul")
@@ -9,14 +9,12 @@ export async function load_faculties(state) {
 					.attr("value", $.trim(data[i].id))
 					.text(data[i].name));
 		}
-		$("#spinnerDzyuba").addClass("hidden");
 		load_speacilaty(state, $("#facul").val());
 	}).catch((ex)=>{
 		$("#spinnerDzyuba").addClass("hidden");
 	});
 }
 export async function load_speacilaty(state, id_faculty) {
-	$("#spinnerDzyuba").removeClass("hidden");
 	state.getters.getSpecialities.then((specialities) => {
 		var filtered_spec = specialities.filter((item) => {
 			if (item.kod_spec == id_faculty) return true;
@@ -31,7 +29,6 @@ export async function load_speacilaty(state, id_faculty) {
 		var id_spec = $('#spec').val() != null ? $('#spec').val().split('?') : '0';
 		var kurs = $('input[name="kurs"]:checked').val();
 		load_grup(state, id_spec[0], kurs);
-		$("#spinnerDzyuba").addClass("hidden");
 	});
 }
 export function spec_changed(state) {
@@ -40,7 +37,6 @@ export function spec_changed(state) {
 	load_grup(state, id_spec[0], kurs);
 }
 export async function load_grup(state, id_spec, kurs) {
-	$("#spinnerDzyuba").removeClass("hidden");
 	state.getters.getGroups.then((groups) => {
 		var filtered_groups = groups.filter((item) => {
 			if (item.KURS == kurs && item.SHIFR_SPEC_NEW == id_spec) return true;
@@ -58,7 +54,7 @@ export async function load_grup(state, id_spec, kurs) {
 			if (count_added % 3 == 0) { $("#groups").append("<br>"); }
 		});
 
-		$("#spinnerDzyuba").addClass("hidden");
+		//$("#spinnerDzyuba").addClass("hidden");
 	});
 }
 export function preloaded_kurses(state) {

@@ -7,7 +7,6 @@ import { Dialog } from 'quasar';
 export function getFaculties(state) {
 	if (!localStorage.getItem('faculties') || localStorage.getItem('faculties') == '') {
 		return new Promise(function (resolve) {
-			console.log('запрос онлайн');
 			_instanse.get('http://raspisanie.asu.edu.ru/student/faculty')
 				.then(function (json) {
 					localStorage.setItem('faculties', JSON.stringify(json.data));

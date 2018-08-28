@@ -35,7 +35,7 @@
         </q-tab-pane>
         <!-- Конец-->
       </q-tabs>
-      <q-inner-loading id="spinnerFaculty":visible="true">
+      <q-inner-loading id="spinnerFaculty" :visible="true">
         <div class="fixed fixed-center text-center">
           <q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
           <p id="message_info" class="text-black" style="font-weight: bold;">Подождите,идет загрузка данных</p>
@@ -77,6 +77,8 @@ export default
       if(localStorage.getItem("choosen_groups"))
       {
          $("#schedule").empty();
+        $("#spinnerFaculty").removeClass("invisible");
+        $("#spinnerFaculty").addClass("visible");
          var choosen_groups = JSON.parse(localStorage.getItem("choosen_groups"));
          $.each(choosen_groups, function(index,value){
             var schedule = localStorage.getItem(value);
@@ -85,6 +87,7 @@ export default
               $("#schedule").append(schedule);
             }
          });
+          $("#spinnerFaculty").addClass("invisible");
       }
     },
     load_schedule_byGroupName()

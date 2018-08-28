@@ -63,7 +63,7 @@
 
         <q-item to="/info">
           <q-item-side class="fa fa-info"/>
-          <q-item-main label="Информация" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
+          <q-item-main label="Контакты" @click.native="leftDrawerOpen=!leftDrawerOpen"/>
         </q-item>
       
       </q-list>

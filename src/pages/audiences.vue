@@ -18,7 +18,7 @@
 
       <q-inner-loading id="spinnerKorpus" :visible="true">
          <div class="fixed fixed-center text-center">
-            <q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
+            <q-spinner-gears class="relative-position" size="50px" color="red"></q-spinner-gears>
             <p style="color:black;font-weight: bold;">Подождите,идет загрузка данных</p>
          </div>
       </q-inner-loading>
