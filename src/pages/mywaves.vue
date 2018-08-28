@@ -35,7 +35,7 @@
 			</ul>
 			<div id="schedule"></div>
 		</div>
-		<q-inner-loading id="spinnerDzyuba" :visible="true" class="hidden">
+		<q-inner-loading id="spinnerDzyuba" class="hidden" :visible=true>
 		<div class="fixed fixed-center text-center">
 		<q-spinner-gears class="relative-position" size="50px"  color="red" ></q-spinner-gears>
 		<p id="message_info" class="text-black" style="font-weight: bold;">Подождите,идет загрузка данных</p>

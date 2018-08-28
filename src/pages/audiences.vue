@@ -12,6 +12,7 @@
       <br /><br/>
      
       <q-btn color="primary" id="audButton" @click="findScheduleByAud" label="Показать" />
+      <br> <br>
       <div id="schedule"></div>
     </div>
 

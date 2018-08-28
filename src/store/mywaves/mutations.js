@@ -50,7 +50,8 @@ export function findSchedule(state) {
 		$("#schedule").empty();
 		var checked_grupovuha = $("input[name='liebenGroups']:checked");
 		$("#spinnerDzyuba").removeClass("hidden");
-		if (navigator.connection.type != Connection.NONE) {
+		if (navigator.connection.type != Connection.NONE)
+		{
 			var data = new FormData();
 			data.append('mobile','mobile');
 			var target_url = 'http://raspisanie.asu.edu.ru/student/schedule/' 
@@ -67,10 +68,18 @@ export function findSchedule(state) {
 						position: 'bottom'
 					});
 				}).catch((err) => {
-					Dialog.create({
-						title: 'Ошибка!',
-						message: "Проверьте интернет соединение!"
-					});
+					var schedule_local = localStorage.getItem(checked_grupovuha[0].value);
+					if(schedule_local!=null)
+					{
+						$("#schedule").append(schedule_local);
+					}
+					else
+					{
+						Dialog.create({
+							title: 'Ошибка загрузки расписания!',
+							message: "Проверьте интернет соединение!"
+						});
+					}
 					$("#spinnerDzyuba").addClass("hidden");
 				});
 		}

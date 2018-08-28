@@ -7,7 +7,8 @@ import { Dialog } from 'quasar';
 export function getFaculties(state) {
 	if (!localStorage.getItem('faculties') || localStorage.getItem('faculties') == '') {
 		return new Promise(function (resolve) {
-			_instanse.get('http://raspisanie.asu.edu.ru/student/faculty', { timeout: 10000 })
+			console.log('запрос онлайн');
+			_instanse.get('http://raspisanie.asu.edu.ru/student/faculty')
 				.then(function (json) {
 					localStorage.setItem('faculties', JSON.stringify(json.data));
 					resolve(json.data);
@@ -28,7 +29,7 @@ export function getFaculties(state) {
 }
 
 export function getSpecialities(state) {
-	if (!localStorage.getItem('all_specialities') || localStorage.getItem('all_specialities').length == 0) {
+	if (!localStorage.getItem('all_specialities') || localStorage.getItem('all_specialities') == '') {
 		return new Promise(function (resolve) {
 			_instanse.get('http://m.raspisanie.asu.edu.ru/student/specialty')
 				.then(function (json) {
@@ -57,8 +58,12 @@ export function getGroups(state) {
 				.then(function (json) {
 					localStorage.setItem('all_groupies', JSON.stringify(json.data))
 					resolve(json.data);
-				}).catch(()=>{
-					
+				}).catch(() => {
+					Dialog.create({
+						title: 'Информация',
+						message: 'Что-то пошло не так. Проверьте интернет соединение' +
+							' или обратитесь к администратору!'
+					});
 				});
 		});
 	}
