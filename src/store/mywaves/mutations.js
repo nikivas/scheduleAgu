@@ -6,7 +6,7 @@ export function acceptar(state) {
 	if (checked_grupovuha.length <= 0) {
 		Notify.create({
 			type: 'negative',
-			message: 'Выберите группы',
+			message: 'Выберите группу',
 			position: 'bottom'
 		});
 	}
@@ -51,7 +51,11 @@ export function findSchedule(state) {
 		var checked_grupovuha = $("input[name='liebenGroups']:checked");
 		$("#spinnerDzyuba").removeClass("hidden");
 		if (navigator.connection.type != Connection.NONE) {
-			axios.get('http://raspisanie.asu.edu.ru/student/schedule/' + checked_grupovuha[0].value)
+			var data = new FormData();
+			data.append('mobile','mobile');
+			var target_url = 'http://raspisanie.asu.edu.ru/student/schedule/' 
+			+ checked_grupovuha[0].value;
+			axios.post(target_url,data)
 				.then((response) => {
 					$("#schedule").append(response.data);
 					localStorage.setItem(checked_grupovuha[0].value, response.data);
