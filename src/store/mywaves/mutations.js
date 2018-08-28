@@ -35,7 +35,7 @@ export function preloadMeineKurses(state) {
 		meine_liben_groups.forEach(function (element, index) {
 			var appended_result;
 			var count_added = 0;
-			appended_result = "<input type='radio' checked='true' value='" + element +
+			appended_result = "Ваша группа : <input type='radio' class='hidden' checked='true' value='" + element +
 				"' name='liebenGroups' class='liebenGroupsCheckbox form-radio animated bounceIn' />"
 				+ element;
 			$("#meine_liben_groups").append(appended_result);

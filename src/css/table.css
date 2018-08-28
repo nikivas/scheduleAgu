@@ -16,7 +16,7 @@ span.segueAud{    font-weight: bold;color: #bf1010;font-size: 10pt;word-break: b
 .table_style td a {pointer-events: none;cursor: default;text-decoration: none;}
 .txtInput{box-sizing: border-box;border-radius: 5px;border-bottom: 2px solid #ffc107;width:55%;}
 .naz_disc{font-size:1.2em;}
-.paud { font-size: 22px; color: #8C8C8C; padding: 10px; letter-spacing: 2px; text-align: center;}
+.paud {display: none;}
 .notPair { text-align: center; font-size: 16px; color: #6E6E6E; padding: 10px; letter-spacing: 2px; font-weight: bold;}
 .divBodyAud { text-align: center;}
 .paud_date { text-align: center; font-size: 17px; color: #8C8C8C;}
@@ -36,6 +36,10 @@ span.segueAud{    font-weight: bold;color: #bf1010;font-size: 10pt;word-break: b
 .view_schedule {	/*display: inline;*/ width:100%;overflow-x: scroll;}
 #kurs{display:block;font-size: 1.3em;color:black;font-weight: bold;}
 .nottable_fio, .nottable_aud, .nottable_lang, .nottable_grnum{display:block; clear:both;}
+#notes
+{
+    padding : 20px;
+}
 /*Надстройка quasar css стилей*/
 .q-tab-label{
     font-size: 0.75em;

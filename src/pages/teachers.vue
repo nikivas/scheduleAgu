@@ -8,6 +8,7 @@
       role="textbox"/><br/>
       <input type="text" name="teacher" id="log" hidden="" ><br/>
       <q-btn class="button" v-on:click="findTeacherClicked" id="search_teacher" color="secondary" label="Показать"/>
+     <br/><br/>
       <div id="schedule"></div>
     </div>
     <q-inner-loading id="teacher_spinner" class="hidden" :visible="true">

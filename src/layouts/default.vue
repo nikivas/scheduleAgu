@@ -17,8 +17,8 @@
         </q-btn>
 
         <q-toolbar-title class="text-white">
-          Расписание
-          <div slot="subtitle" class="text-white">Астраханский государственный университет</div>
+          Меню
+          <div slot="subtitle" class="text-white">{{currentPage}}</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-layout-header>
@@ -82,12 +82,19 @@ export default {
   name: 'LayoutDefault',
   data () {
     return {
-      leftDrawerOpen: this.$q.platform.is.desktop
+      leftDrawerOpen: this.$q.platform.is.desktop,
     }
   },
   methods: {
     openURL
   },
+  computed:
+  {
+    currentPage()
+    {
+      return this.$route.name;
+    }
+  }
 }
 </script>
 

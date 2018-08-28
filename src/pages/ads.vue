@@ -1,6 +1,6 @@
 <template>
   <q-page>
-      <div id="notes" style="width:98%;" class="text-justify"></div>
+      <div id="notes"></div>
 	<q-inner-loading id="spinnerAds" :visible="true">
 		<div class="fixed fixed-center text-center">
 			<q-spinner-gears class="relative-position" size="50px" style="color:#b30b5fff"></q-spinner-gears>
