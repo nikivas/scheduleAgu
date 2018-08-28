@@ -88,7 +88,7 @@
 	}
 </script>
 
-<style scope>
+<style scoped>
 .list_buttons
 {
 	list-style:none;

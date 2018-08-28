@@ -59,6 +59,7 @@ export function findSchedule(state) {
 			axios.post(target_url,data)
 				.then((response) => {
 					$("#schedule").append(response.data);
+					$(".paud").addClass("invise");
 					localStorage.setItem(checked_grupovuha[0].value, response.data);
 					$("#spinnerDzyuba").addClass("hidden");
 					//jQuery.scrollTo("#schedule",1000);

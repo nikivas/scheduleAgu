@@ -207,14 +207,9 @@ export function load_grup(kurs) { //загрузка группы, по умол
     }
     $('#spinnerFaculty').addClass('invisible');
     if (filtered_groups.length == 0) {
-      setTimeout(function () {
-        $("#studentButton1").addClass("animated fadeOut");
-      },
-        500);
       $("#studentButton1").addClass("hidden");
     }
     else {
-      $("#studentButton1").removeClass("animated fadeOut");
       $("#studentButton1").removeClass("hidden");
       setTimeout(function () {
 
