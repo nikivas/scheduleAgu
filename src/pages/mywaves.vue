@@ -92,7 +92,7 @@
 .list_buttons
 {
 	list-style:none;
-	margin-right:2em;
+
 }
 .list_buttons li{
 	display:inline;

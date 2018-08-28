@@ -26,9 +26,8 @@
     <preference name="AndroidPersistentFileLocation" value="Internal" />
     <preference name="iosPersistentFileLocation" value="Library" />
     <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
-    <content src="http://172.16.7.5:8080/index.html" />
+    <content src="index.html" />
     <allow-navigation href="http://192.168.1.68:8080/index.html" />
-    <allow-navigation href="http://172.16.7.5:8080/index.html" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="android" spec="^7.0.0" />
 </widget>
