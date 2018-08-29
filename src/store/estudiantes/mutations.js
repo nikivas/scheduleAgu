@@ -8,14 +8,15 @@ export function ajaxStudent() {
         var grupovuha = $("input[name='grupovuha']");
         var checked_grupovuha = $("input[name='grupovuha']:checked");
         if (grupovuha.length != 0) {
-            var connection_state = navigator.connection.type;
-            if (connection_state != Connection.NONE) {
+            //var connection_state = navigator.connection.type;
+            if (navigator.onLine) {
                 if (checked_grupovuha.length != 0) {
                     checked_grupovuha.each(function (index, element) {
                         var key = this.value;
                         jQuery.ajax({
                             url: 'http://raspisanie.asu.edu.ru/student/schedule/' + key,
                             type: 'POST',
+                            data:{mobile:'mobile'},
                             crossDomain: true,
                             async: true,
                             success: function (data) {
@@ -128,10 +129,11 @@ export function findScheduleByGroupName(groupName) {
         $("#spinnerFaculty").removeClass("invisible");
         $("#spinnerFaculty").addClass("visible");
         $("#message_info").text('Поиск расписания');
-        if (navigator.connection.type != Connection.NONE) {
+        if (navigator.onLine) {
             jQuery.ajax({
                 url: 'http://raspisanie.asu.edu.ru/student/schedule/' + group,
                 type: 'POST',
+                data:{mobile:'mobile'},
                 success: function (data) {
                     var result = jQuery.parseJSON(data);
                     localStorage.setItem(group, result);
@@ -153,6 +155,7 @@ export function findScheduleByGroupName(groupName) {
             });
         }
         else {
+
             var selected_schedule = localStorage.getItem(group);
             if (selected_schedule != null) {
                 $("#schedule2").append(selected_schedule);

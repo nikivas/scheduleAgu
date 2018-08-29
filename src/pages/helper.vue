@@ -1,6 +1,6 @@
 <template>
 	<q-page expand position="top">
-		<p class="text-justify">
+		<p style="padding:20px;line-height:1.4;">
 			Если ваша группа отсутсвует в нашем приложении, попробуйте подгрузить
 			ее вручную с сервера, нажав на кнопку "Обновить"
 		</p>

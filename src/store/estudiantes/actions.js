@@ -31,7 +31,6 @@ export function load_faculty() { /*загрузка факультетов*/
       },
       complete: function () {  /*$('#spinnerFaculty').addClass('invisible');*/ },
       error: function () {
-
         $('#spinnerFaculty').addClass('invisible');
       }
     });

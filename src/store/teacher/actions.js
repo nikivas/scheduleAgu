@@ -1,6 +1,5 @@
 
 import scrollTo from '../../js/jquery.scroll.js';
-
 export function load_teacher() {
 	//загрузка списка преподавателей
 	try {

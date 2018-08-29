@@ -7,7 +7,7 @@ export function findScheduleByAud()
 		$('#spinnerKorpus').removeClass('invisible');
 		$('#spinnerKorpus').addClass('visible');
 		var aud_value = $("#aud").val();
-		if(navigator.connection.type!=Connection.NONE)
+		if(navigator.onLine)
 		{
 			jQuery.ajax({
 				url:'http://raspisanie.asu.edu.ru/audience/schedule/'+aud_value,

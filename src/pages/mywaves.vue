@@ -2,7 +2,7 @@
 	<q-page expand position="top">
 		<br>
 		<div class="text-center" id="settings_block">
-			<span class="label text-italic text-red">Выберите группу</span><br/><br/>
+			<span class="label text-italic text-red">Выберите свою группу</span><br/><br/>
 			<span>Факультет</span><br/>
 			<select v-on:change="load_speacilaty($event.target.value)" class="select-style animated fadeIn" 
 			id = "facul" name="Faculty">

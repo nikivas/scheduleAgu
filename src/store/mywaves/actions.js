@@ -29,6 +29,8 @@ export async function load_speacilaty(state, id_faculty) {
 		var id_spec = $('#spec').val() != null ? $('#spec').val().split('?') : '0';
 		var kurs = $('input[name="kurs"]:checked').val();
 		load_grup(state, id_spec[0], kurs);
+	}).catch(()=>{
+		$("#spinnerDzyuba").addClass("hidden");
 	});
 }
 export function spec_changed(state) {
@@ -54,7 +56,9 @@ export async function load_grup(state, id_spec, kurs) {
 			if (count_added % 3 == 0) { $("#groups").append("<br>"); }
 		});
 
-		//$("#spinnerDzyuba").addClass("hidden");
+		$("#spinnerDzyuba").addClass("hidden");
+	}).catch(()=>{
+		$("#spinnerDzyuba").addClass("hidden");
 	});
 }
 export function preloaded_kurses(state) {

@@ -50,7 +50,7 @@ export function findSchedule(state) {
 		$("#schedule").empty();
 		var checked_grupovuha = $("input[name='liebenGroups']:checked");
 		$("#spinnerDzyuba").removeClass("hidden");
-		if (navigator.connection.type != Connection.NONE)
+		if (navigator.onLine)
 		{
 			var data = new FormData();
 			data.append('mobile','mobile');
