@@ -60,7 +60,10 @@
 			this.load_faculties();
 			this.preloaded_kurses();
 			this.preloadMeineKurses();
-			this.findSchedule();
+			if(localStorage.getItem('meine_liben_groups'))
+			{
+				this.findSchedule();
+			}
 		},
 		created()
 		{

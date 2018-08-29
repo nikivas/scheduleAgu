@@ -86,7 +86,7 @@ export function findSchedule(state) {
 				});
 		}
 		else {
-			$("#spinnerDzyuba").removeClass("hidden");
+			$("#spinnerDzyuba").addClass("hidden");
 			var schedule = localStorage.getItem(checked_grupovuha[0].value);
 			if (schedule != null) {
 				$("#schedule").append(schedule);
@@ -94,9 +94,8 @@ export function findSchedule(state) {
 			else {
 				$("#schedule").append("<p class='text-center'>Расписание отсутствует. Проверьте интернет соединение</p>");
 			}
-			$("#spinnerDzyuba").addClass("hidden");
 		}
 	} catch (e) {
-
+		$("#spinnerDzyuba").addClass("hidden");
 	}
 }

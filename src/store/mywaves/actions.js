@@ -54,7 +54,7 @@ export async function load_grup(state, id_spec, kurs) {
 			count_added++;
 			if (count_added % 3 == 0) { $("#groups").append("<br>"); }
 		});
-		if($("spinnerDzyuba").hasClass("hidden"))
+		if(!localStorage.getItem('meine_liben_groups'))
 		{
 			$("#spinnerDzyuba").addClass("hidden");
 		}
