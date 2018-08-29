@@ -1,7 +1,6 @@
 import {Notify} from 'quasar'
 
 export async function load_faculties(state) {
-	//$("#spinnerDzyuba").removeClass("hidden");
 	state.getters.getFaculties.then((data) => {
 		for (var i = 0; i < data.length; i++) {
 			$("#facul")
@@ -57,7 +56,8 @@ export async function load_grup(state, id_spec, kurs) {
 		});
 
 		$("#spinnerDzyuba").addClass("hidden");
-	}).catch(()=>{
+	}).catch((err)=>{
+		console.log(err);
 		$("#spinnerDzyuba").addClass("hidden");
 	});
 }

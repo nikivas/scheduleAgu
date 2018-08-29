@@ -7,7 +7,7 @@ var count_operations=0;
 var general_operations=6;
 export function update() {
 	$("#update_button").prop("disabled", true);
-	if (navigator.connection.type != Connection.NONE) {
+	if (navigator.onLine) {
 		$("#fidgetSpinner").removeClass("hidden");
 		load_faculty();
 		load_spec();

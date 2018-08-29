@@ -28,7 +28,7 @@
 			
 		<div id="meine_liben_groups">Ваша группа :</div>
 			<ul class="list_buttons">
-			<li><q-btn class="button" size="md" @click="findSchedule" color="secondary"
+			<li><q-btn class="button" size="md" @click="findSchedule" color="teal"
 			 label="Обновить" icon="refresh"/></li>
 			<li><q-btn class="button" size="md" icon="edit" v-on:click="goToSettings"  color="dark" label="Изменить"/>
 			</li>
@@ -94,7 +94,7 @@
 
 }
 .list_buttons li{
-	display:inline;
+	display:inline-block;
 	padding-left : 0.75em;
 }
 

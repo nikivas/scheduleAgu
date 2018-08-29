@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 global.jQuery = require('../../node_modules/jquery/dist/jquery.min.js');
 var $ = global.jQuery;
 window.$ = $;
+
 const Router = new VueRouter({
   /*
    * NOTE! Change Vue Router mode from quasar.conf.js -> build -> vueRouterMode

@@ -17,7 +17,8 @@
             <div id="groups"></div>
           </p>
           <br/>
-          <q-btn class="studentButton" v-on:click="ajaxStudent"  id="studentButton1" color="positive"  label="Показать"/><br/><br/>
+          <q-btn class="studentButton" v-on:click="ajaxStudent"  id="studentButton1"
+           color="deep-orange-10"  label="Показать"/><br/><br/>
           <div id="schedule">
           </div>
         </q-tab-pane>

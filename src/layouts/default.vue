@@ -13,7 +13,7 @@
           @click="leftDrawerOpen = !leftDrawerOpen"
           aria-label="Menu" 
         >
-          <q-icon name="menu"  color="white"/>
+          <q-icon name="menu"  color="teal-1"/>
         </q-btn>
 
         <q-toolbar-title class="text-white">
@@ -78,6 +78,7 @@
 <script>
 import { openURL } from 'quasar'
 require ('../css/table.css')
+require('../js/visibilty.js')
 export default {
   name: 'LayoutDefault',
   data () {

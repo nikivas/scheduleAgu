@@ -17,6 +17,7 @@ export function getFaculties(state) {
 						message: 'Что-то пошло не так. Проверьте интернет соединение' +
 							' или обратитесь к администратору!'
 					});
+					resolve(null);
 				});
 		});
 	}
@@ -40,6 +41,7 @@ export function getSpecialities(state) {
 						message: 'Что-то пошло не так. Проверьте интернет соединение' +
 							' или обратитесь к администратору!'
 					});
+					resolve(null);
 				});
 		});
 	}
@@ -57,12 +59,13 @@ export function getGroups(state) {
 				.then(function (json) {
 					localStorage.setItem('all_groupies', JSON.stringify(json.data))
 					resolve(json.data);
-				}).catch(() => {
+				}).catch((err) => {
 					Dialog.create({
 						title: 'Информация',
 						message: 'Что-то пошло не так. Проверьте интернет соединение' +
 							' или обратитесь к администратору!'
 					});
+					resolve(null);
 				});
 		});
 	}
