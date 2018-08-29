@@ -54,8 +54,10 @@ export async function load_grup(state, id_spec, kurs) {
 			count_added++;
 			if (count_added % 3 == 0) { $("#groups").append("<br>"); }
 		});
-
-		$("#spinnerDzyuba").addClass("hidden");
+		if($("spinnerDzyuba").hasClass("hidden"))
+		{
+			$("#spinnerDzyuba").addClass("hidden");
+		}
 	}).catch((err)=>{
 		console.log(err);
 		$("#spinnerDzyuba").addClass("hidden");

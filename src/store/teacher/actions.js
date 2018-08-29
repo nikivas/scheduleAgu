@@ -9,6 +9,7 @@ export function load_teacher() {
 			$.ajax({
 				url: 'http://raspisanie.asu.edu.ru/teacher/all',
 				type: 'GET',
+				timeout:15000,
 				success: function (data) {
 					birds = JSON.parse(data);
 					localStorage.setItem('birds', data);

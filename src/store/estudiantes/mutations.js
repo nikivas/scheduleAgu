@@ -19,6 +19,7 @@ export function ajaxStudent() {
                             data:{mobile:'mobile'},
                             crossDomain: true,
                             async: true,
+                            timeout:15000,
                             success: function (data) {
                                 var result = jQuery.parseJSON(data);
                                 $("#schedule").append(result);
@@ -49,6 +50,7 @@ export function ajaxStudent() {
                             type: 'POST',
                             crossDomain: true,
                             async: true,
+                            timeout:15000,
                             success: function (data) {
                                 var result = jQuery.parseJSON(data);
                                 $("#schedule").append(result);
@@ -134,6 +136,7 @@ export function findScheduleByGroupName(groupName) {
                 url: 'http://raspisanie.asu.edu.ru/student/schedule/' + group,
                 type: 'POST',
                 data:{mobile:'mobile'},
+                timeout:15000,
                 success: function (data) {
                     var result = jQuery.parseJSON(data);
                     localStorage.setItem(group, result);

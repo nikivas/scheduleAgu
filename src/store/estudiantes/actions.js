@@ -13,6 +13,7 @@ export function load_faculty() { /*загрузка факультетов*/
       type: 'POST',
       crossDomain: true,
       cache: true,
+      timeout:15000,
       beforeSend: function () { $('#spinnerFaculty').addClass('visible'); $("#message_info").text('Загрузка Факультетов'); },
       success: function (data) {
         var json = jQuery.parseJSON(data);
@@ -65,6 +66,7 @@ export function load_specialty(id_spec) {   //специальностей, по
       type: 'POST',
       cache: true,
       //data: {id_spec: id_spec},
+      timeout:15000,
       success: function (data) {
         var json = jQuery.parseJSON(data);
         localStorage.setItem('all_specialities', data);
@@ -167,6 +169,7 @@ export function load_grup(kurs) { //загрузка группы, по умол
     jQuery.ajax({
       url: 'http://raspisanie.asu.edu.ru/student/grup',
       type: 'POST',
+      timeout:15000,
       success: function (data) {
         localStorage.setItem('all_groupies', data);
         $('#spinnerFaculty').addClass('invisible');

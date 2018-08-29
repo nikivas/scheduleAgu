@@ -15,7 +15,6 @@
           </div><br/>
           <span>Группы</span><br>
             <div id="groups"></div>
-          </p>
           <br/>
           <q-btn class="studentButton" v-on:click="ajaxStudent"  id="studentButton1"
            color="deep-orange-10"  label="Показать"/><br/><br/>
